@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Restaurant;
 use App\Tag;
 use Illuminate\Http\Request;
-use Mockery\CountValidator\Exception;
+use Ixudra\Curl\CurlService;
 use Ixudra\Curl\Facades\Curl;
+use Mockery\CountValidator\Exception;
 
 class RestaurantController extends Controller
 {
@@ -16,36 +18,42 @@ class RestaurantController extends Controller
      */
     public function maps()
     {
-        /*$data = $request->all(); // This will get all the request data.
+        try{
 
-        dd($data); // This will dump and die
+        $restaurantsGoogle = Curl::to("https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=48.890982,2.239759&radius=750&type=restaurant&key=AIzaSyAg4AuvoQ6ZF5uxqpjliVxYACAdAWvbvDk")->get();
 
-        if (isset($_POST['lat'], $_POST['lng'])) {
-            $lat = $_POST['lat'];
-            $lng = $_POST['lng'];
+        $restaurantsSQL = Restaurant::all();
 
-            $url = sprintf("https://maps.googleapis.com/maps/api/geocode/json?latlng=%s,%s", $lat, $lng);
+        $restaurantsSQLOrdered = array();
 
-            $content = file_get_contents($url); // get json content
+        foreach ($restaurantsSQL as $restaurant){
+            $restaurantsSQLOrdered[$restaurant->g_id] = $restaurant;
+        }
 
-            $metadata = json_decode($content, true); //json decoder
+        $restaurantsGoogle = json_decode($restaurantsGoogle)->results;
 
-            if (count($metadata['results']) > 0) {
-                // for format example look at url
-                // https://maps.googleapis.com/maps/api/geocode/json?latlng=40.714224,-73.961452
-                $result = $metadata['results'][0];
+        foreach ($restaurantsGoogle as $restaurant) {
+            if (isset($restaurantsSQLOrdered[$restaurant->id])) {
 
-                // save it in db for further use
-                echo $result['formatted_address'];
-
-            } else {
-                // no results returned
             }
-        }*/
+            else{
+                $insertRestaurant = new Restaurant;
 
-        $response = Curl::to("https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=" . $_POST['lat'] . "," . $_POST['lng'] . "&radius=750&type=restaurant&key=AIzaSyAg4AuvoQ6ZF5uxqpjliVxYACAdAWvbvDk")
-            ->get();
-        return $response;
+                $insertRestaurant->lat = $restaurant->geometry->location->lat;
+                $insertRestaurant->lng = $restaurant->geometry->location->lng;
+                $insertRestaurant->g_id = $restaurant->id;
+                $insertRestaurant->name = $restaurant->name;
+                $insertRestaurant->icon = $restaurant->icon;
+                $insertRestaurant->infos = $restaurant->vicinity;
+
+                $insertRestaurant->save();
+            }
+        }
+        } catch(Exception $e){
+            return $e;
+        }
+
+        return $restaurantsGoogle;
     }
 
     /**
@@ -55,8 +63,9 @@ class RestaurantController extends Controller
      */
     public function index()
     {
-        $tags = Tag::all();
-//        $tags = [];
+
+//        $tags = Tag::all();
+        $tags = [];
         return view('main')->with(compact('tags'));
     }
 

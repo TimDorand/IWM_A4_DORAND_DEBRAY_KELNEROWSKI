@@ -16,5 +16,5 @@ Route::resource('/rates', 'RatesController');
 
 Auth::routes();
 
-Route::post('/restaurant', 'RestaurantController@maps');
+Route::post('/', 'RestaurantController@maps');
 

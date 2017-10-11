@@ -4,11 +4,11 @@
         z-index:100;
         width: 100%;}
 </style>
-
+{{--
 <script>jQuery(window).load(function () {
         $('.alertcustom').delay(10000).fadeOut("2000");
     });
-</script>
+</script>--}}
 
 @if(isset($success))
     @if($success = Session::get('success'))

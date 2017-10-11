@@ -246,21 +246,21 @@
             alert(message);
         }
 
-        function savePosition(position) {
-            initMap(position.coords.latitude, position.coords.longitude);
-            $.ajax({
-                type: "POST",
-                cache: false,
-                encoding: "UTF-8",
-                url: "/restaurant",
-                data: {lat: position.coords.latitude, lng: position.coords.longitude, _token: "{{csrf_token()}}"},
-                success: function (data) {
-                    console.log(data);
-                }
-            });
-        }
-    </script>
-    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAg4AuvoQ6ZF5uxqpjliVxYACAdAWvbvDk&libraries=places&callback=getLocation" async defer></script>
+            function savePosition(position) {
+                initMap(position.coords.latitude, position.coords.longitude);
+                $.ajax({
+                    type: "POST",
+                    cache: false,
+                    encoding: "UTF-8",
+                    url: "/",
+                    data: {lat: position.coords.latitude, lng: position.coords.longitude, _token: "{{csrf_token()}}" },
+                    success: function (data) {
+                        console.log(data);
+                    }
+                });
+            }
+        </script>
+        <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAg4AuvoQ6ZF5uxqpjliVxYACAdAWvbvDk&libraries=places&callback=getLocation" async defer></script>
 
     </div>
 @endsection
