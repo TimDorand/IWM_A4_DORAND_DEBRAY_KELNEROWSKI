@@ -25,6 +25,10 @@
                                 {{ config('app.name', 'Eat Nearby') }}
                         </a>
                     </div>
+                    <div class="nav-center">
+                        <h1 class="nav-item">Find nearby places and eat what you want !</h1>
+                    </div>
+
                     <span class="nav-toggle">
                       <span></span>
                       <span></span>

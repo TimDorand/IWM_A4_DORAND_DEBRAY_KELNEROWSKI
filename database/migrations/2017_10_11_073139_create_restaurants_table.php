@@ -17,10 +17,11 @@ class CreateRestaurantsTable extends Migration
             $table->increments('id');
             $table->float('lat');
             $table->float('long');
-            $table->integer('g_id');
+            $table->integer('g_id')->nullable();
             $table->string('name');
-            $table->longText('icon');
-            $table->longText('infos');
+            $table->longText('icon')->nullable();
+            $table->longText('infos')->nulable();
+
         });
     }
 

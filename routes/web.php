@@ -11,13 +11,11 @@
 |
 */
 
-Route::get('/', function () {
-    return view('main');
-});
+Route::resource('/', 'RestaurantController');
+Route::resource('/rates', 'RatesController');
 
 Auth::routes();
 
 Route::post('/geolocation', 'RestaurantController@geolocation');
-Route::resource('/restaurant', 'RestaurantController');
 
 Route::get('/home', 'HomeController@index')->name('home');
