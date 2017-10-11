@@ -14,7 +14,7 @@
     {{--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.6.0/css/bulma.css"/>--}}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.5.3/css/bulma.min.css" integrity="sha256-spCEAaZMKebC3rE/ZTt8jITn65b0Zan45WXblWjyDyQ=" crossorigin="anonymous" />
 
-{{--    <link href="{{ asset('css/app.css') }}" rel="stylesheet">--}}
+    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
 <body>
         <div class="container" id="app">

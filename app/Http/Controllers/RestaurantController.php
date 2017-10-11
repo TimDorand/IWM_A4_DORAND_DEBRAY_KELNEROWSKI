@@ -55,9 +55,8 @@ class RestaurantController extends Controller
      */
     public function index()
     {
-//        $tags = Tag::all();
-        dd(Tag::all());
-        $tags = [];
+        $tags = Tag::all();
+//        $tags = [];
         return view('main')->with(compact('tags'));
     }
 
