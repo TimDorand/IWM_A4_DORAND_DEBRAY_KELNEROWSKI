@@ -18,7 +18,7 @@ class UpdateRatesTable extends Migration
             $table->foreign('user_id')->references('id')->on('users');
             $table->integer('rest_id')->unsigned()->nulable()->after('user_id');
             $table->foreign('rest_id')->references('id')->on('restaurants');
-            $table->integer('tag_id')->unsigned()->nulable()->after('id');
+            $table->integer('tag_id')->unsigned()->nulable()->after('rest_id');
             $table->foreign('tag_id')->references('id')->on('tags');
         });
     }
