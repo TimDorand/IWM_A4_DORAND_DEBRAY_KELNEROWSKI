@@ -11,11 +11,11 @@ class HomeController extends Controller
      *
      * @return void
      */
-    public function __construct()
+  /*  public function __construct()
     {
         $this->middleware('auth');
     }
-
+*/
     /**
      * Show the application dashboard.
      *
@@ -23,6 +23,8 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $response = Curl::to("https://maps.googleapis.com/maps/api/place/radarsearch/json?location=" . $_POST['lat'] . "," . $_POST['lng'] . "&radius=10&type=restaurant&key=AIzaSyAg4AuvoQ6ZF5uxqpjliVxYACAdAWvbvDk")
+            ->get();
+        return $response;
     }
 }

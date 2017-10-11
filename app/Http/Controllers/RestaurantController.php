@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Mockery\CountValidator\Exception;
+use Ixudra\Curl\Facades\Curl;
 
 class RestaurantController extends Controller
 {
@@ -11,10 +13,12 @@ class RestaurantController extends Controller
      * Get the address of the current User location
      *
      */
-    public function geolocation(Request $request)
+    public function maps()
     {
+        /*$data = $request->all(); // This will get all the request data.
 
-        dd($request);
+        dd($data); // This will dump and die
+
         if (isset($_POST['lat'], $_POST['lng'])) {
             $lat = $_POST['lat'];
             $lng = $_POST['lng'];
@@ -36,8 +40,11 @@ class RestaurantController extends Controller
             } else {
                 // no results returned
             }
-        }
+        }*/
 
+        $response = Curl::to("https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=" . $_POST['lat'] . "," . $_POST['lng'] . "&radius=750&type=restaurant&key=AIzaSyAg4AuvoQ6ZF5uxqpjliVxYACAdAWvbvDk")
+            ->get();
+        return $response;
     }
 
     /**
@@ -47,7 +54,7 @@ class RestaurantController extends Controller
      */
     public function index()
     {
-        //
+        return view('main');
     }
 
     /**

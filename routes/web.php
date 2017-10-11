@@ -17,7 +17,8 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::post('/geolocation', 'RestaurantController@geolocation');
-Route::resource('/restaurant', 'RestaurantController');
+Route::get('/restaurant', 'RestaurantController@index');
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::post('/restaurant', 'RestaurantController@maps');
+
+Route::get('/', 'HomeController@index')->name('home');
