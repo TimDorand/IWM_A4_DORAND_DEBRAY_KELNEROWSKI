@@ -11,9 +11,8 @@
 |
 */
 
-Route::get('/', function () {
-    return view('main');
-});
+Route::resource('/', 'RestaurantController');
+Route::resource('/rates', 'RatesController');
 
 Auth::routes();
 

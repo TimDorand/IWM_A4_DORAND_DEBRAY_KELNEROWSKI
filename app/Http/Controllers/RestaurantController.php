@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Tag;
 use Illuminate\Http\Request;
 use Mockery\CountValidator\Exception;
 use Ixudra\Curl\Facades\Curl;
@@ -50,11 +51,14 @@ class RestaurantController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function index()
     {
-        return view('main');
+//        $tags = Tag::all();
+        dd(Tag::all());
+        $tags = [];
+        return view('main')->with(compact('tags'));
     }
 
     /**
