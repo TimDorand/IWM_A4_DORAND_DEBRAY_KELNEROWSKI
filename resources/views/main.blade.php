@@ -307,7 +307,7 @@
                     type: "POST",
                     cache: false,
                     encoding: "UTF-8",
-                    url: "/restaurant",
+                    url: "/",
                     data: {lat: position.coords.latitude, lng: position.coords.longitude, _token: "{{csrf_token()}}" },
                     success: function (data) {
                         console.log(data);

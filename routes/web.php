@@ -16,8 +16,5 @@ Route::resource('/rates', 'RatesController');
 
 Auth::routes();
 
-Route::get('/restaurant', 'RestaurantController@index');
+Route::post('/', 'RestaurantController@maps');
 
-Route::post('/restaurant', 'RestaurantController@maps');
-
-Route::get('/', 'HomeController@index')->name('home');
