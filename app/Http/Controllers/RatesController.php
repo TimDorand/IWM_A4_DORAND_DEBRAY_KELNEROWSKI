@@ -45,7 +45,15 @@ class RatesController extends Controller
         $tags = Tag::all();
         foreach($tags as $tag){
             if(isset($request['rating_'.$tag->id])){
-                $rate = new Rate;
+                $existing_rate = Rate::where('user_id', Auth::user()->id)
+                                        ->where('tag_id', $tag->id)
+                                        ->where('restaurant_id', $request->rest_id)
+                                        ->first();
+                if(count($existing_rate) == 1){
+                    $rate = $existing_rate;
+                }else{
+                    $rate = new Rate;
+                }
                 $rate->rate = $request['rating_'.$tag->id];
                 $rate->user_id = Auth::user()->id;
                 $rate->restaurant_id = $request->rest_id;
@@ -53,7 +61,7 @@ class RatesController extends Controller
                 $rate->save();
             }
         }
-        return redirect()->route('index')->with('success', 'Votre commentaire à bien été pris en compte !');
+        return redirect()->route('index')->with('alert-success', 'Votre avis à bien été pris en compte !');
     }
 
     /**

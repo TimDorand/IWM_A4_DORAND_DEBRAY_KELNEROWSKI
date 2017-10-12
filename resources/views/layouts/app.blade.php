@@ -9,6 +9,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>{{ config('app.name', 'Eat Nearby') }}</title>
+    <link rel="icon" href="{{asset('favicon.png')}}" />
 
     <!-- Styles -->
     {{--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.6.0/css/bulma.css"/>--}}
@@ -23,7 +24,8 @@
                 <div class="container">
                     <div class="nav-left">
                         <a class="nav-item" href="{{url('/')}}">
-                                {{ config('app.name', 'Eat Nearby') }}
+                            <img src="{{asset('logo.png')}}" alt="logo" class="image">
+{{--                                {{ config('app.name', 'Eat Nearby') }}--}}
                         </a>
                     </div>
                     <div class="nav-center">
