@@ -177,15 +177,39 @@
         }
 
         var listeRestaurants;
+        var listeTags = [];
 
         $('.tag').click(function(){
             $(this).toggleClass('animated pulse is-success');
-            // var liste obtenue
             var text_tag =  $(this).text();
-            // if($.inArray(text_tag, liste obtenue) > -1);
-            // append listRestaurants
-            //createMarker(listeRestaurants);
+            if($.inArray(text_tag, listeTags) == -1)
+            {
+                listeTags.push(text_tag);
+            }else{
+                for(i=0;i<listeTags.length;i++)
+                {
+                    if(text_tag == listeTags[i]){
+                        var index = listeTags.indexOf(text_tag);
+                        listeTags.splice(index, 1);
+                    }
+                }
+            }
+            console.log(listeTags);
+            sendTags(listeTags);
         });
+
+        function sendTags(listTags,listeRestaurants){
+            alert(listTags);
+            for(i=0;i<listeTags.length;i++)
+            {
+                if($.inArray(listTags[i], listeRestaurants) == -1)
+                {
+                    console.log('ok');
+                    //append listRestaurants
+                }
+            }
+            //createMarker(listeRestaurants);
+        }
     </script>
 
     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAg4AuvoQ6ZF5uxqpjliVxYACAdAWvbvDk&libraries=places&callback=getLocation" async defer></script>
