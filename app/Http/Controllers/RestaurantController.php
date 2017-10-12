@@ -24,6 +24,7 @@ class RestaurantController extends Controller
         }
         catch (Exception $err){
             // Logs Google API failure
+            return $err;
         }
 
         $restaurantsSQL = Restaurant::all();
@@ -34,16 +35,15 @@ class RestaurantController extends Controller
         foreach ($restaurantsSQL as $restaurant){
             $restaurantsSQLOrdered[$restaurant->g_id] = $restaurant;
             if($this->distance($_POST['lat'],$_POST['lng'],$restaurant->lat, $restaurant->lng) < 0.75) {
-                $rates = Rate::where("rest_id", $restaurant->g_id);
+                $rates = $restaurant->rates;
                 $count = new \stdClass();
+                $restaurant->rate = new \stdClass();
                 foreach ($rates as $rate) {
-                    if(!isset($restaurant[$rate->tag_id])) $restaurant[$rate->tag_id] = 0;
-                    $restaurant[$rate->tag_id] += $rate->rate;
-                    if(!isset($count[$rate->tag_id])) $count[$rate->tag_id] = 0;
-                    $count[$rate->tag_id]++;
-                }
-                foreach ($count as $key => $value) {
-                    $restaurant[$key] = $restaurant[$key] / $value;
+                    if(!isset($restaurant->rate->{$rate->tag_id})) $restaurant->rate->{$rate->tag_id} = 0;
+                    if(!isset($count->{$rate->tag_id})) $count->{$rate->tag_id} = 0;
+
+                    $restaurant->rate->{$rate->tag_id} = ($restaurant->rate->{$rate->tag_id}* $count->{$rate->tag_id} + $rate->rate) / ($count->{$rate->tag_id} + 1);
+                    $count->{$rate->tag_id}++;
                 }
             }
             array_push($results, $restaurant);
@@ -84,6 +84,7 @@ class RestaurantController extends Controller
                     $rest->icon = $restaurant->icon;
                     $rest->infos = $restaurant->vicinity;
                     $rest->types = json_encode($restaurant->types);
+
 
                     array_push($results, $rest);
                 }

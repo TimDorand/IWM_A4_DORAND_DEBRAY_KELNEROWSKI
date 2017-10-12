@@ -20,8 +20,8 @@ class CreateRatesTable extends Migration
             $table->integer('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users')->onDetele('cascade');
 
-            $table->integer('rest_id')->unsigned();
-            $table->foreign('rest_id')->references('id')->on('restaurants')->onDetele('cascade');
+            $table->integer('restaurant_id')->unsigned();
+            $table->foreign('restaurant_id')->references('id')->on('restaurants')->onDetele('cascade');
 
             $table->integer('tag_id')->unsigned();
             $table->foreign('tag_id')->references('id')->on('tags')->onDetele('cascade');
