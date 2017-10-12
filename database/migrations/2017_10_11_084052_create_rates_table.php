@@ -26,7 +26,6 @@ class CreateRatesTable extends Migration
             $table->integer('tag_id')->unsigned();
             $table->foreign('tag_id')->references('id')->on('tags')->onDetele('cascade');
             $table->timestamps();
-
         });
     }
 

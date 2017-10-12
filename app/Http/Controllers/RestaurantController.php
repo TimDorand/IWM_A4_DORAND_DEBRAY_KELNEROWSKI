@@ -6,8 +6,8 @@ use App\Rate;
 use App\Restaurant;
 use App\Tag;
 use Illuminate\Http\Request;
-use Mockery\CountValidator\Exception;
 use Ixudra\Curl\Facades\Curl;
+use Mockery\CountValidator\Exception;
 
 class RestaurantController extends Controller
 {
@@ -57,12 +57,22 @@ class RestaurantController extends Controller
                     $insertRestaurant->icon = $restaurant->icon;
                     $insertRestaurant->infos = $restaurant->vicinity;
                     $insertRestaurant->types = json_encode($restaurant->types);
+                    if(isset($restaurant->photos[0]->photo_reference)){
+                        $insertRestaurant->photo_reference = $restaurant->photos[0]->photo_reference;
+                    }else{
+                        $insertRestaurant->photo_reference = null;
+                    }
 
                     $insertRestaurant->save();
 
                     $rest = new \stdClass();
                     $rest->lat = $restaurant->geometry->location->lat;
                     $rest->lng = $restaurant->geometry->location->lng;
+                    if(isset($restaurant->photos[0]->photo_reference)){
+                        $rest->photo_reference = $restaurant->photos[0]->photo_reference;
+                    }else{
+                        $rest->photo_reference = null;
+                    }
                     $rest->g_id = $restaurant->id;
                     $rest->name = $restaurant->name;
                     $rest->icon = $restaurant->icon;
@@ -83,9 +93,9 @@ class RestaurantController extends Controller
      */
     public function index()
     {
-//        $tags = Tag::all();
 
-        $tags = [];
+        $tags = Tag::all();
+//        $tags = [];
         return view('main')->with(compact('tags'));
     }
 

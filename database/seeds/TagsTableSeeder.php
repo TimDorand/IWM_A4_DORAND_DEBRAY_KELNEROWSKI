@@ -11,19 +11,20 @@ class TagsTableSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('tags')->insert(['id' => 1, 'name' => 'Cheap', 'color' => 'vert']);
-        DB::table('tags')->insert(['id' => 2, 'name' => 'Healthy', 'color' => 'vert']);
-        DB::table('tags')->insert(['id' => 3, 'name' => 'Fast', 'color' => 'vert']);
-        DB::table('tags')->insert(['id' => 4, 'name' => 'Near', 'color' => 'vert']);
-        DB::table('tags')->insert(['id' => 5, 'name' => 'Pizza', 'color' => 'vert']);
-        DB::table('tags')->insert(['id' => 6, 'name' => 'Kebab', 'color' => 'vert']);
-        DB::table('tags')->insert(['id' => 7, 'name' => 'French', 'color' => 'vert']);
-        DB::table('tags')->insert(['id' => 8, 'name' => 'Burger', 'color' => 'vert']);
-        DB::table('tags')->insert(['id' => 9, 'name' => 'Italian', 'color' => 'vert']);
-        DB::table('tags')->insert(['id' => 10, 'name' => 'American', 'color' => 'vert']);
-        DB::table('tags')->insert(['id' => 11, 'name' => 'Mexican', 'color' => 'vert']);
-        DB::table('tags')->insert(['id' => 12, 'name' => 'Moroccan', 'color' => 'vert']);
-        DB::table('tags')->insert(['id' => 13, 'name' => 'Sushi', 'color' => 'vert']);
-        DB::table('tags')->insert(['id' => 14, 'name' => 'Sandwiches', 'color' => 'vert']);
+        DB::table('tags')->insert(['id' => 1, 'name' => 'Cheap', 'category' => 'main']);
+        DB::table('tags')->insert(['id' => 2, 'name' => 'Healthy', 'category' => 'main']);
+        DB::table('tags')->insert(['id' => 3, 'name' => 'Fast', 'category' => 'main']);
+        DB::table('tags')->insert(['id' => 4, 'name' => 'Near', 'category' => 'main']);
+        DB::table('tags')->insert(['id' => 5, 'name' => 'Huge', 'category' => 'main']);
+        DB::table('tags')->insert(['id' => 6, 'name' => 'Fat', 'category' => 'main']);
+        DB::table('tags')->insert(['id' => 7, 'name' => 'Pizza', 'category' => 'second']);
+        DB::table('tags')->insert(['id' => 8, 'name' => 'Burger', 'category' => 'second']);
+        DB::table('tags')->insert(['id' => 9, 'name' => 'Italian', 'category' => 'second']);
+        DB::table('tags')->insert(['id' => 10, 'name' => 'American', 'category' => 'second']);
+        DB::table('tags')->insert(['id' => 11, 'name' => 'Mexican', 'category' => 'second']);
+        DB::table('tags')->insert(['id' => 12, 'name' => 'Moroccan', 'category' => 'second']);
+        DB::table('tags')->insert(['id' => 13, 'name' => 'Sushi', 'category' => 'second']);
+        DB::table('tags')->insert(['id' => 14, 'name' => 'Sandwiches', 'category' => 'second']);
+        DB::table('tags')->insert(['id' => 15, 'name' => 'Kebab', 'category' => 'second']);
     }
 }

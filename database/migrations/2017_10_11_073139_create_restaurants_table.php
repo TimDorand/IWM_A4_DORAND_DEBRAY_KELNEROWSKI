@@ -19,6 +19,7 @@ class CreateRestaurantsTable extends Migration
             $table->decimal('lng',10,7);
             $table->text('g_id')->nullable();
             $table->string('name');
+            $table->string('photo_reference')->nullable();
             $table->longText('icon')->nullable();
             $table->longText('infos')->nulable();
             $table->longText('types')->nulable();
