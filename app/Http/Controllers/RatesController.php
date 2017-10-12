@@ -48,7 +48,7 @@ class RatesController extends Controller
                 $rate = new Rate;
                 $rate->rate = $request['rating_'.$tag->id];
                 $rate->user_id = Auth::user()->id;
-                $rate->rest_id = $request->rest_id;
+                $rate->restaurant_id = $request->rest_id;
                 $rate->tag_id= $tag->id;
                 $rate->save();
             }
