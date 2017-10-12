@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Rate;
 use App\Restaurant;
 use App\Tag;
 use Illuminate\Http\Request;
@@ -33,6 +34,11 @@ class RestaurantController extends Controller
         foreach ($restaurantsSQL as $restaurant){
             $restaurantsSQLOrdered[$restaurant->g_id] = $restaurant;
             if($this->distance($_POST['lat'],$_POST['lng'],$restaurant->lat, $restaurant->lng) < 0.75) {
+                $rates = Rate::where("rest_id", $restaurant->g_id);
+                foreach ($rates as $rate) {
+                    $restaurant[$rate->tag_id] += $rate->rate;
+                }
+
                 array_push($results, $restaurant);
             }
         }
