@@ -17,43 +17,67 @@ class RestaurantController extends Controller
      */
     public function maps()
     {
-        try{
-
-        $restaurantsGoogle = Curl::to("https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=" . $_POST['lat'] . "," . $_POST['lng'] . "&radius=750&type=restaurant&key=AIzaSyAg4AuvoQ6ZF5uxqpjliVxYACAdAWvbvDk")
-            ->get();
+        try {
+            $restaurantsGoogle = Curl::to("https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=" . $_POST['lat'] . "," . $_POST['lng'] . "&radius=750&type=restaurant&key=AIzaSyAg4AuvoQ6ZF5uxqpjliVxYACAdAWvbvDk")
+                ->get();
+        }
+        catch (Exception $err){
+            // Logs Google API failure
+        }
 
         $restaurantsSQL = Restaurant::all();
 
         $restaurantsSQLOrdered = array();
+        $results = array();
 
         foreach ($restaurantsSQL as $restaurant){
             $restaurantsSQLOrdered[$restaurant->g_id] = $restaurant;
-        }
-
-        $restaurantsGoogle = json_decode($restaurantsGoogle)->results;
-
-        foreach ($restaurantsGoogle as $restaurant) {
-            if (isset($restaurantsSQLOrdered[$restaurant->id])) {
-
-            }
-            else{
-                $insertRestaurant = new Restaurant;
-
-                $insertRestaurant->lat = $restaurant->geometry->location->lat;
-                $insertRestaurant->lng = $restaurant->geometry->location->lng;
-                $insertRestaurant->g_id = $restaurant->id;
-                $insertRestaurant->name = $restaurant->name;
-                $insertRestaurant->icon = $restaurant->icon;
-                $insertRestaurant->infos = $restaurant->vicinity;
-
-                $insertRestaurant->save();
+            if($this->distance($_POST['lat'],$_POST['lng'],$restaurant->lat, $restaurant->lng) < 0.75) {
+                array_push($results, $restaurant);
             }
         }
-        } catch(Exception $e){
-            return $e;
-        }
 
-        return $restaurantsGoogle;
+        if(isset($restaurantsGoogle)){
+            $restaurantsGoogle = json_decode($restaurantsGoogle)->results;
+
+            foreach ($restaurantsGoogle as $restaurant) {
+                if (!isset($restaurantsSQLOrdered[$restaurant->id])) {
+                    $insertRestaurant = new Restaurant;
+
+                    $insertRestaurant->lat = $restaurant->geometry->location->lat;
+                    $insertRestaurant->lng = $restaurant->geometry->location->lng;
+                    $insertRestaurant->g_id = $restaurant->id;
+                    $insertRestaurant->name = $restaurant->name;
+                    $insertRestaurant->icon = $restaurant->icon;
+                    $insertRestaurant->infos = $restaurant->vicinity;
+                    $insertRestaurant->types = json_encode($restaurant->types);
+                    if(isset($restaurant->photos[0]->photo_reference)){
+                        $insertRestaurant->photo_reference = $restaurant->photos[0]->photo_reference;
+                    }else{
+                        $insertRestaurant->photo_reference = null;
+                    }
+
+                    $insertRestaurant->save();
+
+                    $rest = new \stdClass();
+                    $rest->lat = $restaurant->geometry->location->lat;
+                    $rest->lng = $restaurant->geometry->location->lng;
+                    if(isset($restaurant->photos[0]->photo_reference)){
+                        $rest->photo_reference = $restaurant->photos[0]->photo_reference;
+                    }else{
+                        $rest->photo_reference = null;
+                    }
+                    $rest->g_id = $restaurant->id;
+                    $rest->name = $restaurant->name;
+                    $rest->icon = $restaurant->icon;
+                    $rest->infos = $restaurant->vicinity;
+                    $rest->types = json_encode($restaurant->types);
+
+                    array_push($results, $rest);
+                }
+            }
+        }
+        return $results;
     }
 
     /**
@@ -133,5 +157,25 @@ class RestaurantController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    function distance($lat1, $lon1, $lat2, $lon2)
+    {
+        //rayon de la terre
+        $r = 6366;
+        $lat1 = deg2rad($lat1);
+        $lat2 = deg2rad($lat2);
+        $lon1 = deg2rad($lon1);
+        $lon2 = deg2rad($lon2);
+
+        //calcul précis
+        $dp= 2 * asin(sqrt(pow (sin(($lat1-$lat2)/2) , 2) + cos($lat1)*cos($lat2)* pow( sin(($lon1-$lon2)/2) , 2)));
+
+        //sortie en km
+        $d = $dp * $r;
+
+        $h = sqrt(pow($d,2));
+
+        return $h;
     }
 }
