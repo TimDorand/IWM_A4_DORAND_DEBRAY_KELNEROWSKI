@@ -56,7 +56,7 @@
             infowindow = new google.maps.InfoWindow();
         }
 
-        function callback(results, status) {
+        function createMarkers(results, status) {
             if (status === google.maps.places.PlacesServiceStatus.OK) {
                 for (var i = 0; i < results.length; i++) {
                     createMarker(results[i]);
@@ -91,7 +91,59 @@
             alert(message);
         }
 
-        var googleResponse
+        function displayList(data){
+            var listRest = []
+            var photoRef
+            for (var key in data) {
+                if (data[key].photo_reference) {
+                    photoRef = data[key].photo_reference
+                } else {
+                    photoRef = 'CmRaAAAApfIhUaSptnWNIsypAN1eC80OE6TPd-Aytf7-EssAY7P2Egx6w59cvPfLrO7RSFy-gvLGR4OYCYeaPt4AkJu6MWFzFZbbgiXQZ6legyk4zX1LxuEa-ILdeAf7tpeh7ZW1EhAH2UdmVxJFYrAo0oP6yYSKGhQgP6MZx2EQ4CUzTyvYsKs6Kc_sEQ'
+                }
+                listRest[key] = '<div class="column is-6">' +
+                    '<div class="box">' +
+                    '<article class="media columns">' +
+                    '<div class="media-left column is-2 is-one-quarter-mobile"> ' +
+//                            '<figure class="image height-auto"><img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=' + photoRef + '&key=AIzaSyAg4AuvoQ6ZF5uxqpjliVxYACAdAWvbvDk" alt="Image"></figure> ' +
+                    '<figure class="image height-auto"><img src="' + data[key].icon + '" alt="Image"></figure> ' +
+                    '</div> ' +
+                    '<div class="media-content column is-10"> ' +
+                    '<div class="content"> <p  style="margin:0px"> <strong>' + data[key].name + '</strong>  <br> ' + data[key].infos + '</p>' +
+                    '<br><form action="{{route('rates.store')}}" method="post" class="columns is-multiline">' +
+                        @foreach($tags as $tag)
+                                @if($tag->category == 'main')
+                            '<div class="comment column is-6" id="comment_' + data[key].g_id + '_{{$tag->id}}"> ' +
+                    '<div class="comment-header-right"> ' +
+                    '<fieldset class="rating"> ' +
+                    '<input type="radio" id="' + data[key].g_id + '{{$tag->id}}_star5" name="rating' + data[key].g_id + '{{$tag->id}}" value="5"/><label class="full" for="' + data[key].g_id + '{{$tag->id}}_star5" title="Awesome - 5 stars"></label> ' +
+                    '<input type="radio" id="' + data[key].g_id + '{{$tag->id}}_star4half" name="rating' + data[key].g_id + '{{$tag->id}}" value="4.5"/><label class="half" for="' + data[key].g_id + '{{$tag->id}}_star4half" title="Pretty good - 4.5 stars"></label> ' +
+                    '<input type="radio" id="' + data[key].g_id + '{{$tag->id}}_star4" name="rating' + data[key].g_id + '{{$tag->id}}" value="4"/><label class="full" for="' + data[key].g_id + '{{$tag->id}}_star4" title="Pretty good - 4 stars"></label> ' +
+                    '<input type="radio" id="' + data[key].g_id + '{{$tag->id}}_star3half" name="rating' + data[key].g_id + '{{$tag->id}}"value="3.5"/><label class="half" for="' + data[key].g_id + '{{$tag->id}}_star3half" title="Meh - 3.5 stars"></label> ' +
+                    '<input type="radio" id="' + data[key].g_id + '{{$tag->id}}_star3" name="rating' + data[key].g_id + '{{$tag->id}}" value="3"/><label class="full" for="' + data[key].g_id + '{{$tag->id}}_star3" title="Meh - 3 stars"></label> ' +
+                    '<input type="radio" id="' + data[key].g_id + '{{$tag->id}}_star2half" name="rating' + data[key].g_id + '{{$tag->id}}" value="2.5"/><label class="half" for="' + data[key].g_id + '{{$tag->id}}_star2half" title="Kinda bad - 2.5 stars"></label> ' +
+                    '<input type="radio" id="' + data[key].g_id + '{{$tag->id}}_star2" name="rating' + data[key].g_id + '{{$tag->id}}" value="2"/><label class="full" for="' + data[key].g_id + '{{$tag->id}}_star2" title="Kinda bad - 2 stars"></label> ' +
+                    '<input type="radio" id="' + data[key].g_id + '{{$tag->id}}_star1half" name="rating' + data[key].g_id + '{{$tag->id}}" value="1.5"/><label class="half" for="' + data[key].g_id + '{{$tag->id}}_star1half" title="Meh - 1.5 stars"></label> ' +
+                    '<input type="radio" id="' + data[key].g_id + '{{$tag->id}}_star1" name="rating' + data[key].g_id + '{{$tag->id}}" value="1"/><label class="full" for="' + data[key].g_id + '{{$tag->id}}_star1" title="Sucks big time - 1 star"></label> ' +
+                    '<input type="radio" id="' + data[key].g_id + '{{$tag->id}}_starhalf" name="rating' + data[key].g_id + '{{$tag->id}}" value="half"/><label class="half" for="' + data[key].g_id + '{{$tag->id}}_starhalf" title="Sucks big time - 0.5 stars"></label> ' +
+                    '</fieldset> ' +
+                    '<p style="padding-top:8px">{{$tag->name}}</p></div></div>' +
+                        @endif
+                                @endforeach
+                            '<div class="comment-footer-right"> ' +
+                    '<div class="level"><a type="submit" title="Valider" class="button level-right is-small">Valider</a></div> ' +
+                    '</form> ' +
+                    '</div>' +
+                    '</div> ' +
+                    '</article> ' +
+                    '</div><' +
+                    '/div>'
+            }
+
+            for (rest in listRest) {
+                $(".restaurantList").append(listRest[rest]);
+            }
+        }
+
         function savePosition(position) {
             initMap(position.coords.latitude, position.coords.longitude);
             $.ajax({
@@ -101,62 +153,10 @@
                 url: "/",
                 data: {lat: position.coords.latitude, lng: position.coords.longitude, _token: "{{csrf_token()}}"},
                 success: function (data) {
-                    callback(data, 'OK');
+                    createMarkers(data, 'OK');
+                    displayList(data);
                     console.log(data);
-
                     $('#loader').hide()
-
-
-                    var listRest = []
-                    var photoRef
-                    for (var key in data) {
-                        if (data[key].photo_reference) {
-                            photoRef = data[key].photo_reference
-                        } else {
-                            photoRef = 'CmRaAAAApfIhUaSptnWNIsypAN1eC80OE6TPd-Aytf7-EssAY7P2Egx6w59cvPfLrO7RSFy-gvLGR4OYCYeaPt4AkJu6MWFzFZbbgiXQZ6legyk4zX1LxuEa-ILdeAf7tpeh7ZW1EhAH2UdmVxJFYrAo0oP6yYSKGhQgP6MZx2EQ4CUzTyvYsKs6Kc_sEQ'
-                        }
-                        listRest[key] = '<div class="column is-6">' +
-                            '<div class="box">' +
-                            '<article class="media columns">' +
-                            '<div class="media-left column is-2 is-one-quarter-mobile"> ' +
-//                            '<figure class="image height-auto"><img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=' + photoRef + '&key=AIzaSyAg4AuvoQ6ZF5uxqpjliVxYACAdAWvbvDk" alt="Image"></figure> ' +
-                            '<figure class="image height-auto"><img src="' + data[key].icon + '" alt="Image"></figure> ' +
-                            '</div> ' +
-                            '<div class="media-content column is-10"> ' +
-                            '<div class="content"> <p  style="margin:0px"> <strong>' + data[key].name + '</strong>  <br> ' + data[key].infos + '</p>' +
-                            '<br><form action="{{route('rates.store')}}" method="post" class="columns is-multiline">' +
-                                @foreach($tags as $tag)
-                                    @if($tag->category == 'main')
-                                    '<div class="comment column is-6" id="comment_' + data[key].g_id + '_{{$tag->id}}"> ' +
-                            '<div class="comment-header-right"> ' +
-                            '<fieldset class="rating"> ' +
-                            '<input type="radio" id="' + data[key].g_id + '{{$tag->id}}_star5" name="rating' + data[key].g_id + '{{$tag->id}}" value="5"/><label class="full" for="' + data[key].g_id + '{{$tag->id}}_star5" title="Awesome - 5 stars"></label> ' +
-                            '<input type="radio" id="' + data[key].g_id + '{{$tag->id}}_star4half" name="rating' + data[key].g_id + '{{$tag->id}}" value="4.5"/><label class="half" for="' + data[key].g_id + '{{$tag->id}}_star4half" title="Pretty good - 4.5 stars"></label> ' +
-                            '<input type="radio" id="' + data[key].g_id + '{{$tag->id}}_star4" name="rating' + data[key].g_id + '{{$tag->id}}" value="4"/><label class="full" for="' + data[key].g_id + '{{$tag->id}}_star4" title="Pretty good - 4 stars"></label> ' +
-                            '<input type="radio" id="' + data[key].g_id + '{{$tag->id}}_star3half" name="rating' + data[key].g_id + '{{$tag->id}}"value="3.5"/><label class="half" for="' + data[key].g_id + '{{$tag->id}}_star3half" title="Meh - 3.5 stars"></label> ' +
-                            '<input type="radio" id="' + data[key].g_id + '{{$tag->id}}_star3" name="rating' + data[key].g_id + '{{$tag->id}}" value="3"/><label class="full" for="' + data[key].g_id + '{{$tag->id}}_star3" title="Meh - 3 stars"></label> ' +
-                            '<input type="radio" id="' + data[key].g_id + '{{$tag->id}}_star2half" name="rating' + data[key].g_id + '{{$tag->id}}" value="2.5"/><label class="half" for="' + data[key].g_id + '{{$tag->id}}_star2half" title="Kinda bad - 2.5 stars"></label> ' +
-                            '<input type="radio" id="' + data[key].g_id + '{{$tag->id}}_star2" name="rating' + data[key].g_id + '{{$tag->id}}" value="2"/><label class="full" for="' + data[key].g_id + '{{$tag->id}}_star2" title="Kinda bad - 2 stars"></label> ' +
-                            '<input type="radio" id="' + data[key].g_id + '{{$tag->id}}_star1half" name="rating' + data[key].g_id + '{{$tag->id}}" value="1.5"/><label class="half" for="' + data[key].g_id + '{{$tag->id}}_star1half" title="Meh - 1.5 stars"></label> ' +
-                            '<input type="radio" id="' + data[key].g_id + '{{$tag->id}}_star1" name="rating' + data[key].g_id + '{{$tag->id}}" value="1"/><label class="full" for="' + data[key].g_id + '{{$tag->id}}_star1" title="Sucks big time - 1 star"></label> ' +
-                            '<input type="radio" id="' + data[key].g_id + '{{$tag->id}}_starhalf" name="rating' + data[key].g_id + '{{$tag->id}}" value="half"/><label class="half" for="' + data[key].g_id + '{{$tag->id}}_starhalf" title="Sucks big time - 0.5 stars"></label> ' +
-                            '</fieldset> ' +
-                            '<p style="padding-top:8px">{{$tag->name}}</p></div></div>' +
-                                @endif
-                                @endforeach
-                                    '<div class="comment-footer-right"> ' +
-                            '<div class="level"><a type="submit" title="Valider" class="button level-right is-small">Valider</a></div> ' +
-                            '</form> ' +
-                            '</div>' +
-                            '</div> ' +
-                            '</article> ' +
-                            '</div><' +
-                            '/div>'
-                    }
-
-                    for (rest in listRest) {
-                        $(".restaurantList").append(listRest[rest]);
-                    }
                 }
             });
         }
