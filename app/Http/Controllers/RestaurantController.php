@@ -17,8 +17,13 @@ class RestaurantController extends Controller
      */
     public function maps()
     {
-        $restaurantsGoogle = Curl::to("https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=" . $_POST['lat'] . "," . $_POST['lng']. "&radius=750&type=restaurant&key=AIzaSyAg4AuvoQ6ZF5uxqpjliVxYACAdAWvbvDk")
-            ->get();
+        try {
+            $restaurantsGoogle = Curl::to("https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=" . $_POST['lat'] . "," . $_POST['lng'] . "&radius=750&type=restaurant&key=AIzaSyAg4AuvoQ6ZF5uxqpjliVxYACAdAWvbvDk")
+                ->get();
+        }
+        catch (Exception $err){
+            // Logs Google API failure
+        }
 
         $restaurantsSQL = Restaurant::all();
 
@@ -32,35 +37,36 @@ class RestaurantController extends Controller
             }
         }
 
-        $restaurantsGoogle = json_decode($restaurantsGoogle)->results;
+        if(isset($restaurantsGoogle)){
+            $restaurantsGoogle = json_decode($restaurantsGoogle)->results;
 
-        foreach ($restaurantsGoogle as $restaurant) {
-            if (!isset($restaurantsSQLOrdered[$restaurant->id])) {
-                $insertRestaurant = new Restaurant;
+            foreach ($restaurantsGoogle as $restaurant) {
+                if (!isset($restaurantsSQLOrdered[$restaurant->id])) {
+                    $insertRestaurant = new Restaurant;
 
-                $insertRestaurant->lat = $restaurant->geometry->location->lat;
-                $insertRestaurant->lng = $restaurant->geometry->location->lng;
-                $insertRestaurant->g_id = $restaurant->id;
-                $insertRestaurant->name = $restaurant->name;
-                $insertRestaurant->icon = $restaurant->icon;
-                $insertRestaurant->infos = $restaurant->vicinity;
-                $insertRestaurant->types = json_encode($restaurant->types);
+                    $insertRestaurant->lat = $restaurant->geometry->location->lat;
+                    $insertRestaurant->lng = $restaurant->geometry->location->lng;
+                    $insertRestaurant->g_id = $restaurant->id;
+                    $insertRestaurant->name = $restaurant->name;
+                    $insertRestaurant->icon = $restaurant->icon;
+                    $insertRestaurant->infos = $restaurant->vicinity;
+                    $insertRestaurant->types = json_encode($restaurant->types);
 
-                $insertRestaurant->save();
+                    $insertRestaurant->save();
 
-                $rest = new \stdClass();
-                $rest->lat = $restaurant->geometry->location->lat;
-                $rest->lng = $restaurant->geometry->location->lng;
-                $rest->g_id = $restaurant->id;
-                $rest->name = $restaurant->name;
-                $rest->icon = $restaurant->icon;
-                $rest->infos = $restaurant->vicinity;
-                $rest->types = json_encode($restaurant->types);
+                    $rest = new \stdClass();
+                    $rest->lat = $restaurant->geometry->location->lat;
+                    $rest->lng = $restaurant->geometry->location->lng;
+                    $rest->g_id = $restaurant->id;
+                    $rest->name = $restaurant->name;
+                    $rest->icon = $restaurant->icon;
+                    $rest->infos = $restaurant->vicinity;
+                    $rest->types = json_encode($restaurant->types);
 
-                array_push($results, $rest);
+                    array_push($results, $rest);
+                }
             }
         }
-
         return $results;
     }
 
