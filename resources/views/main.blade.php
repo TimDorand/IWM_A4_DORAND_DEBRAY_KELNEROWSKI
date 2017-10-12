@@ -2,8 +2,13 @@
 
 @section('content')
 
-    <section class="hero has-text-centered is-medium is-success is-bold">
+    <section class="hero has-text-centered is-medium is-success is-bold" >
         {{--<div class="hero-body">--}}
+     {{--   <div class="hero-body" style=" z-index:0;">
+            <div class="container">
+                <h1 class="title">Easily find where to eat !</h1>
+            </div>
+        </div>--}}
         <div id="map" style="height:300px"></div>
         {{--</div>--}}
     </section>
@@ -147,6 +152,8 @@
             }
         }
 
+        var listRestaurants
+
         function savePosition(position) {
             initMap(position.coords.latitude, position.coords.longitude);
             $.ajax({
@@ -156,12 +163,17 @@
                 url: "/",
                 data: {lat: position.coords.latitude, lng: position.coords.longitude, _token: "{{csrf_token()}}"},
                 success: function (data) {
+                    listRestaurants = data
                     createMarkers(data, 'OK');
                     displayList(data);
                     console.log(data);
                     $('#loader').hide();
                 }
             });
+        }
+
+        function roundHalf(num) {
+            return Math.round(num*2)/2;
         }
 
         var listeRestaurants;

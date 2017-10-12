@@ -53,7 +53,7 @@
                                 <a class="button" href="{{ route('register') }}">Register</a>
                               </p>
                                 @else
-                                    <div class="dropdown is-active">
+                                    <div class="dropdown ">
                                       <div class="dropdown-trigger">
                                         <button class="button" aria-haspopup="true" aria-controls="dropdown-menu">
                                           <span>{{ Auth::user()->name }}</span> <span class="caret"></span>
@@ -73,9 +73,9 @@
                                                         {{ csrf_field() }}
                                                     </form>
                                           <a class="dropdown-item">
-                                            Other dropdown item
+                                            My ratings
                                           </a>
-                                          <a href="#" class="dropdown-item is-active">
+                                         {{-- <a href="#" class="dropdown-item is-active">
                                             Active dropdown item
                                           </a>
                                           <a href="#" class="dropdown-item">
@@ -84,7 +84,7 @@
                                           <hr class="dropdown-divider">
                                           <a href="#" class="dropdown-item">
                                             With a divider
-                                          </a>
+                                          </a>--}}
                                         </div>
                                       </div>
                                     </div>
