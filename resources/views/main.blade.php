@@ -159,10 +159,21 @@
                     createMarkers(data, 'OK');
                     displayList(data);
                     console.log(data);
-                    $('#loader').hide()
+                    $('#loader').hide();
                 }
             });
         }
+
+        var listeRestaurants;
+
+        $('.tag').click(function(){
+            $(this).toggleClass('animated pulse is-success');
+            // var liste obtenue
+            var text_tag =  $(this).text();
+            // if($.inArray(text_tag, liste obtenue) > -1);
+            // append listRestaurants
+            //createMarker(listeRestaurants);
+        });
     </script>
 
     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAg4AuvoQ6ZF5uxqpjliVxYACAdAWvbvDk&libraries=places&callback=getLocation" async defer></script>
