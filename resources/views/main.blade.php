@@ -118,23 +118,25 @@
                     '{{csrf_field()}}'+
                         @foreach($tags as $tag)
                                 @if($tag->category == 'main')
-                            '<div class="comment column is-6" id="comment_' + data[key].g_id + '_{{$tag->id}}"> ' +
-                    '<div class="comment-header-right"> ' +
-                    '<fieldset class="rating"> ' +
-                    '<input type="radio" id="' + data[key].g_id + '{{$tag->id}}_star5" name="rating_{{$tag->id}}" value="5"/><label class="full" for="' + data[key].g_id + '{{$tag->id}}_star5" title="Awesome - 5 stars"></label> ' +
-                    '<input type="radio" id="' + data[key].g_id + '{{$tag->id}}_star4half" name="rating_{{$tag->id}}" value="4.5"/><label class="half" for="' + data[key].g_id + '{{$tag->id}}_star4half" title="Pretty good - 4.5 stars"></label> ' +
-                    '<input type="radio" id="' + data[key].g_id + '{{$tag->id}}_star4" name="rating_{{$tag->id}}" value="4"/><label class="full" for="' + data[key].g_id + '{{$tag->id}}_star4" title="Pretty good - 4 stars"></label> ' +
-                    '<input type="radio" id="' + data[key].g_id + '{{$tag->id}}_star3half" name="rating_{{$tag->id}}"value="3.5"/><label class="half" for="' + data[key].g_id + '{{$tag->id}}_star3half" title="Meh - 3.5 stars"></label> ' +
-                    '<input type="radio" id="' + data[key].g_id + '{{$tag->id}}_star3" name="rating_{{$tag->id}}" value="3"/><label class="full" for="' + data[key].g_id + '{{$tag->id}}_star3" title="Meh - 3 stars"></label> ' +
-                    '<input type="radio" id="' + data[key].g_id + '{{$tag->id}}_star2half" name="rating_{{$tag->id}}" value="2.5"/><label class="half" for="' + data[key].g_id + '{{$tag->id}}_star2half" title="Kinda bad - 2.5 stars"></label> ' +
-                    '<input type="radio" id="' + data[key].g_id + '{{$tag->id}}_star2" name="rating_{{$tag->id}}" value="2"/><label class="full" for="' + data[key].g_id + '{{$tag->id}}_star2" title="Kinda bad - 2 stars"></label> ' +
-                    '<input type="radio" id="' + data[key].g_id + '{{$tag->id}}_star1half" name="rating_{{$tag->id}}" value="1.5"/><label class="half" for="' + data[key].g_id + '{{$tag->id}}_star1half" title="Meh - 1.5 stars"></label> ' +
-                    '<input type="radio" id="' + data[key].g_id + '{{$tag->id}}_star1" name="rating_{{$tag->id}}" value="1"/><label class="full" for="' + data[key].g_id + '{{$tag->id}}_star1" title="Sucks big time - 1 star"></label> ' +
-                    '<input type="radio" id="' + data[key].g_id + '{{$tag->id}}_starhalf" name="rating_{{$tag->id}}" value="half"/><label class="half" for="' + data[key].g_id + '{{$tag->id}}_starhalf" title="Sucks big time - 0.5 stars"></label> ' +
-                    '</fieldset> ' +
-                    '<input hidden name="rest_id" value="' + data[key].id + '"><p style="padding-top:8px">{{$tag->name}}</p></div></div>' +
-                        @endif
-                                @endforeach
+                                    '<div class="comment column is-6" id="comment_' + data[key].g_id + '_{{$tag->id}}"> ' +
+                                        '<div class="comment-header-right"> ' +
+                                            '<fieldset class="rating"> ' +
+                                                '<input type="radio" id="' + data[key].g_id + '{{$tag->id}}_star5" name="rating_{{$tag->id}}" value="5"/><label '+ ((data[key].rate['{{$tag->id}}'] >= 5) ? 'style="background: rgba(43, 232, 105, 0.2);"' : '') + '  class="full" for="' + data[key].g_id + '{{$tag->id}}_star5" title="Awesome - 5 stars"></label> ' +
+                                                '<input type="radio" id="' + data[key].g_id + '{{$tag->id}}_star4half" name="rating_{{$tag->id}}" value="4.5"/><label '+ ((data[key].rate['{{$tag->id}}'] >= 4.5) ? 'style="background: rgba(43, 232, 105, 0.2);"' : '') + '  class="half" for="' + data[key].g_id + '{{$tag->id}}_star4half" title="Pretty good - 4.5 stars"></label> ' +
+                                                '<input type="radio" id="' + data[key].g_id + '{{$tag->id}}_star4" name="rating_{{$tag->id}}" value="4"/><label '+ ((data[key].rate['{{$tag->id}}'] >= 4) ? 'style="background: rgba(43, 232, 105, 0.2);"' : '') + '  class="full" for="' + data[key].g_id + '{{$tag->id}}_star4" title="Pretty good - 4 stars"></label> ' +
+                                                '<input type="radio" id="' + data[key].g_id + '{{$tag->id}}_star3half" name="rating_{{$tag->id}}" value="3.5"/><label '+ ((data[key].rate['{{$tag->id}}'] >= 3.5) ? 'style="background: rgba(43, 232, 105, 0.2);"' : '') + '  class="half" for="' + data[key].g_id + '{{$tag->id}}_star3half" title="Meh - 3.5 stars"></label> ' +
+                                                '<input type="radio" id="' + data[key].g_id + '{{$tag->id}}_star3" name="rating_{{$tag->id}}" value="3"><label ' + ((data[key].rate['{{$tag->id}}'] >= 3) ? 'style="background: rgba(43, 232, 105, 0.2);"' : '') + '  class="full" for="' + data[key].g_id + '{{$tag->id}}_star3" title="Meh - 3 stars"></label> ' +
+                                                '<input type="radio" id="' + data[key].g_id + '{{$tag->id}}_star2half" name="rating_{{$tag->id}}" value="2.5"/><label '+ ((data[key].rate['{{$tag->id}}'] >= 2.5) ? 'style="background: rgba(43, 232, 105, 0.2);"' : '') + '  class="half" for="' + data[key].g_id + '{{$tag->id}}_star2half" title="Kinda bad - 2.5 stars"></label> ' +
+                                                '<input type="radio" id="' + data[key].g_id + '{{$tag->id}}_star2" name="rating_{{$tag->id}}" value="2"><label ' + ((data[key].rate['{{$tag->id}}'] >= 2) ? 'style="background: rgba(43, 232, 105, 0.2);"' : '') + '  class="full" for="' + data[key].g_id + '{{$tag->id}}_star2" title="Kinda bad - 2 stars"></label> ' +
+                                                '<input type="radio" id="' + data[key].g_id + '{{$tag->id}}_star1half" name="rating_{{$tag->id}}" value="1.5"/><label '+ ((data[key].rate['{{$tag->id}}'] >= 1.5) ? 'style="background: rgba(43, 232, 105, 0.2);"' : '') + '  class="half" for="' + data[key].g_id + '{{$tag->id}}_star1half" title="Meh - 1.5 stars"></label> ' +
+                                                '<input type="radio" id="' + data[key].g_id + '{{$tag->id}}_star1" name="rating_{{$tag->id}}" value="1"/><label '+ ((data[key].rate['{{$tag->id}}'] >= 1) ? 'style="background: rgba(43, 232, 105, 0.2);"' : '' ) + '  class="full" for="' + data[key].g_id + '{{$tag->id}}_star1" title="Sucks big time - 1 star"></label> ' +
+                                                '<input type="radio" id="' + data[key].g_id + '{{$tag->id}}_starhalf" name="rating_{{$tag->id}}" value="0.5"/><label '+ ((data[key].rate['{{$tag->id}}'] >= 0.5) ? 'style="background: rgba(43, 232, 105, 0.2);"' : '') + '  class="half" for="' + data[key].g_id + '{{$tag->id}}_starhalf" title="Sucks big time - 0.5 stars"></label> ' +
+                                            '</fieldset> ' +
+                                            '<input hidden name="rest_id" value="' + data[key].id + '"><p style="padding-top:8px">{{$tag->name}}</p>'+
+                                        '</div>' +
+                                    '</div>' +
+                            @endif
+                        @endforeach
                             '<div class="comment-footer-right"> ' +
                     '<div class="level"><button type="submit" title="Valider" class="button level-right is-small">Valider</button></div> ' +
                     '</form> ' +
