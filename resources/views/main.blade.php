@@ -14,47 +14,31 @@
             <div class="column is-6">
                 <div id="meta" class="field is-grouped is-grouped-multiline">
                     @foreach($tags as $tag)
-                        <div class="control">
-                            <div class="tags has-addons">
-                                <span class="tag @if($tag->color == 'vert') is-success @endif ">{{$tag->name}}</span>
-                                <a class="tag is-delete"></a>
+                        @if($tag->category == 'main')
+
+                            <div class="control">
+                                <div class="tags has-addons">
+                                    <span class="tag">{{$tag->name}}</span>
+                                </div>
                             </div>
-                        </div>
+                        @endif
+                    @endforeach
+                </div>
+                <div id="meta" class="field is-grouped is-grouped-multiline">
+                    @foreach($tags as $tag)
+                        @if($tag->category == 'second')
+
+                            <div class="control">
+                                <div class="tags has-addons">
+                                    <span class="tag">{{$tag->name}}</span>
+                                </div>
+                            </div>
+                        @endif
                     @endforeach
                 </div>
 
-                <div class="box">
-                    <article class="media">
-                        <div class="media-left">
-                            <figure class="image is-64x64">
-                                <img src="http://bulma.io/images/placeholders/128x128.png" alt="Image">
-                            </figure>
-                        </div>
-                        <div class="media-content">
-                            <div class="content">
-                                <p>
-                                    <strong>John Smith</strong>
-                                    <small>@johnsmith</small>
-                                    <small>31m</small>
-                                    <br>
-                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean efficitur sit amet massa fringilla egestas. Nullam condimentum luctus turpis.
-                                </p>
-                            </div>
-                            <nav class="level is-mobile">
-                                <div class="level-left">
-                                    <a class="level-item">
-                                        <span class="icon is-small"><i class="fa fa-reply"></i></span>
-                                    </a>
-                                    <a class="level-item">
-                                        <span class="icon is-small"><i class="fa fa-retweet"></i></span>
-                                    </a>
-                                    <a class="level-item">
-                                        <span class="icon is-small"><i class="fa fa-heart"></i></span>
-                                    </a>
-                                </div>
-                            </nav>
-                        </div>
-                    </article>
+                <div class="restaurantList">
+
                 </div>
             </div>
             <div class="column is-6">
@@ -115,7 +99,7 @@
                                 </div>--}}
                             </div>
 
-                            <script>
+                       {{--     <script>
                                 $(function () {
 
                                     var comment = $('.comment'),
@@ -175,7 +159,7 @@
                                     });
 
                                 });
-                            </script>
+                            </script>--}}
                         </div>
                     @endforeach
                     <div class="comment-footer-right">
@@ -184,6 +168,7 @@
             </div>
         </div>
     </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 
     <script>
 
@@ -197,14 +182,7 @@
                 center: pyrmont,
                 zoom: 15
             });
-
             infowindow = new google.maps.InfoWindow();
-            var service = new google.maps.places.PlacesService(map);
-            service.nearbySearch({
-                location: pyrmont,
-                radius: 500,
-                type: ['store']
-            }, callback);
         }
 
         function callback(results, status) {
@@ -227,9 +205,6 @@
                 infowindow.open(map, this);
             });
         }
-    </script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-    <script>
         function getLocation() {
             if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(savePosition, positionError, {timeout: 10000});
@@ -246,21 +221,48 @@
             alert(message);
         }
 
-            function savePosition(position) {
-                initMap(position.coords.latitude, position.coords.longitude);
-                $.ajax({
-                    type: "POST",
-                    cache: false,
-                    encoding: "UTF-8",
-                    url: "/",
-                    data: {lat: position.coords.latitude, lng: position.coords.longitude, _token: "{{csrf_token()}}" },
-                    success: function (data) {
-                        console.log(data);
+        var googleResponse
+        function savePosition(position) {
+            initMap(position.coords.latitude, position.coords.longitude);
+            $.ajax({
+                type: "POST",
+                cache: false,
+                encoding: "UTF-8",
+                url: "/",
+                data: {lat: position.coords.latitude, lng: position.coords.longitude, _token: "{{csrf_token()}}"},
+                success: function (data) {
+                    callback(data, 'OK');
+                    googleResponse = data
+                    console.log(data);
+                    var listRest = []
+                    var photoRef
+                    for(var key in data){
+                        if(typeof data[key].photos !== "undefined") {
+                            photoRef = data[key].photos[0].photo_reference
+                        }else{
+                            photoRef = 'CmRaAAAApfIhUaSptnWNIsypAN1eC80OE6TPd-Aytf7-EssAY7P2Egx6w59cvPfLrO7RSFy-gvLGR4OYCYeaPt4AkJu6MWFzFZbbgiXQZ6legyk4zX1LxuEa-ILdeAf7tpeh7ZW1EhAH2UdmVxJFYrAo0oP6yYSKGhQgP6MZx2EQ4CUzTyvYsKs6Kc_sEQ'
+                        }
+                        listRest[key] = '<div class="box">' +
+                        '<article class="media">' +
+                        '<div class="media-left"> ' +
+                        '<figure class="image is-32x32"><img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=' + photoRef +'&key=AIzaSyAg4AuvoQ6ZF5uxqpjliVxYACAdAWvbvDk" alt="Image"></figure> ' +
+                        '</div> ' +
+                        '<div class="media-content"> ' +
+                        '<div class="content"> <p> <strong>' + data[key].name + '</strong>  <br> ' + data[key].vicinity + '</p>' +
+                        '</div>' +
+                        '</div> ' +
+                        '</article> ' +
+                        '</div>'
                     }
-                });
-            }
-        </script>
-        <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAg4AuvoQ6ZF5uxqpjliVxYACAdAWvbvDk&libraries=places&callback=getLocation" async defer></script>
+                    for(rest in listRest) {
+                        $(".restaurantList").append(listRest[rest]);
+                    }
+                }
+            });
+        }
+    </script>
+
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAg4AuvoQ6ZF5uxqpjliVxYACAdAWvbvDk&libraries=places&callback=getLocation" async defer></script>
 
     </div>
 @endsection

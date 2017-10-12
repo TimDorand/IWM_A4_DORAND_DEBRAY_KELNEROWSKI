@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Restaurant;
 use App\Tag;
 use Illuminate\Http\Request;
-use Ixudra\Curl\CurlService;
 use Ixudra\Curl\Facades\Curl;
 use Mockery\CountValidator\Exception;
 
@@ -20,7 +19,8 @@ class RestaurantController extends Controller
     {
         try{
 
-        $restaurantsGoogle = Curl::to("https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=48.890982,2.239759&radius=750&type=restaurant&key=AIzaSyAg4AuvoQ6ZF5uxqpjliVxYACAdAWvbvDk")->get();
+        $restaurantsGoogle = Curl::to("https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=" . $_POST['lat'] . "," . $_POST['lng'] . "&radius=750&type=restaurant&key=AIzaSyAg4AuvoQ6ZF5uxqpjliVxYACAdAWvbvDk")
+            ->get();
 
         $restaurantsSQL = Restaurant::all();
 
@@ -64,8 +64,8 @@ class RestaurantController extends Controller
     public function index()
     {
 
-//        $tags = Tag::all();
-        $tags = [];
+        $tags = Tag::all();
+//        $tags = [];
         return view('main')->with(compact('tags'));
     }
 
