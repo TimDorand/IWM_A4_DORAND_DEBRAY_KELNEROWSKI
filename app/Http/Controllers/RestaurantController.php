@@ -45,8 +45,9 @@ class RestaurantController extends Controller
                     $restaurant->rate->{$rate->tag_id} = ($restaurant->rate->{$rate->tag_id}* $count->{$rate->tag_id} + $rate->rate) / ($count->{$rate->tag_id} + 1);
                     $count->{$rate->tag_id}++;
                 }
+                array_push($results, $restaurant);
             }
-            array_push($results, $restaurant);
+
         }
 
         if(isset($restaurantsGoogle)){
