@@ -10,3 +10,9 @@
   height: auto;
   max-height: 100px;
 }
+#loader{
+  position: absolute;
+  z-index: 9999;
+  left:35%;
+  bottom:10%;
+}

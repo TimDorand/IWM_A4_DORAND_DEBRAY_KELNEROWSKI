@@ -96,10 +96,10 @@
     </div>
 
 
-
+    <img src="{{asset('giphy-downsized.gif')}}" alt="loader" id="loader" >
     @yield('content')
 
-    <div class="hero-foot">
+  {{--  <div class="hero-foot">
         <div class="container">
             <div class="tabs is-centered">
                 <ul>
@@ -107,7 +107,7 @@
                 </ul>
             </div>
         </div>
-    </div>
+    </div>--}}
 {{--<script async type="text/javascript" src="../js/bulma.js"></script>--}}
 
     <!-- Scripts -->
