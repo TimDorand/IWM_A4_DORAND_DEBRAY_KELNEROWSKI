@@ -147,6 +147,8 @@
             }
         }
 
+        var listRestaurants
+
         function savePosition(position) {
             initMap(position.coords.latitude, position.coords.longitude);
             $.ajax({
@@ -156,6 +158,7 @@
                 url: "/",
                 data: {lat: position.coords.latitude, lng: position.coords.longitude, _token: "{{csrf_token()}}"},
                 success: function (data) {
+                    listRestaurants = data
                     createMarkers(data, 'OK');
                     displayList(data);
                     console.log(data);
@@ -163,6 +166,17 @@
                 }
             });
         }
+
+        /*$('tag').click(function(){
+            var tag = this.text
+            if tag exits in listRestaurants
+                append array
+            else
+                false
+
+            createMarker(array)
+            displayList(array)
+        })*/
     </script>
 
     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAg4AuvoQ6ZF5uxqpjliVxYACAdAWvbvDk&libraries=places&callback=getLocation" async defer></script>
