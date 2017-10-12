@@ -178,38 +178,42 @@
             return Math.round(num*2)/2;
         }
 
-        var listeRestaurants;
-        var listeTags = [];
+        var listTags = [];
 
         $('.tag').click(function(){
             $(this).toggleClass('animated pulse is-success');
             var text_tag =  $(this).text();
-            if($.inArray(text_tag, listeTags) == -1)
+            if($.inArray(text_tag, listTags) == -1)
             {
-                listeTags.push(text_tag);
+                listTags.push(text_tag);
             }else{
-                for(i=0;i<listeTags.length;i++)
+                for(var i=0;i<listTags.length;i++)
                 {
-                    if(text_tag == listeTags[i]){
-                        var index = listeTags.indexOf(text_tag);
-                        listeTags.splice(index, 1);
+                    if(text_tag == listTags[i]){
+                        var index = listTags.indexOf(text_tag);
+                        listTags.splice(index, 1);
                     }
                 }
             }
-            console.log(listeTags);
-            sendTags(listeTags);
+            console.log(listTags);
+            sendTags(listTags,listRestaurants);
         });
 
-        function sendTags(listTags,listeRestaurants){
-            for(i=0;i<listeTags.length;i++)
-            {
-                if($.inArray(listTags[i], listeRestaurants) == -1)
+        function sendTags(listTags,listRestaurants){
+            var newListRestaurants;
+            for (var keys in listRestaurants){
+                for ( var key in keys )
                 {
-                    console.log('ok');
-                    //append listRestaurants
+                    console.log(key)
+                }
+                for(var i=0;i<listTags.length;i++) {
+                    if($.inArray(listTags[i], listRestaurants) == -1)
+                    {
+                        newListRestaurants.push(listRestaurants[i]);
+                    }
                 }
             }
-            //createMarker(listeRestaurants);
+            createMarker(newListRestaurants);
         }
     </script>
 
