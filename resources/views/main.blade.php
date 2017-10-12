@@ -2,8 +2,13 @@
 
 @section('content')
 
-    <section class="hero has-text-centered is-medium is-success is-bold">
+    <section class="hero has-text-centered is-medium is-success is-bold" >
         {{--<div class="hero-body">--}}
+     {{--   <div class="hero-body" style=" z-index:0;">
+            <div class="container">
+                <h1 class="title">Easily find where to eat !</h1>
+            </div>
+        </div>--}}
         <div id="map" style="height:300px"></div>
         {{--</div>--}}
     </section>
@@ -162,21 +167,25 @@
                     createMarkers(data, 'OK');
                     displayList(data);
                     console.log(data);
-                    $('#loader').hide()
+                    $('#loader').hide();
                 }
             });
         }
 
-        /*$('tag').click(function(){
-            var tag = this.text
-            if tag exits in listRestaurants
-                append array
-            else
-                false
+        function roundHalf(num) {
+            return Math.round(num*2)/2;
+        }
 
-            createMarker(array)
-            displayList(array)
-        })*/
+        var listeRestaurants;
+
+        $('.tag').click(function(){
+            $(this).toggleClass('animated pulse is-success');
+            // var liste obtenue
+            var text_tag =  $(this).text();
+            // if($.inArray(text_tag, liste obtenue) > -1);
+            // append listRestaurants
+            //createMarker(listeRestaurants);
+        });
     </script>
 
     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAg4AuvoQ6ZF5uxqpjliVxYACAdAWvbvDk&libraries=places&callback=getLocation" async defer></script>

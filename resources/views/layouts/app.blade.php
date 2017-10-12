@@ -12,6 +12,7 @@
 
     <!-- Styles -->
     {{--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.6.0/css/bulma.css"/>--}}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.5.3/css/bulma.min.css" integrity="sha256-spCEAaZMKebC3rE/ZTt8jITn65b0Zan45WXblWjyDyQ=" crossorigin="anonymous" />
 
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
@@ -52,7 +53,7 @@
                                 <a class="button" href="{{ route('register') }}">Register</a>
                               </p>
                                 @else
-                                    <div class="dropdown is-active">
+                                    <div class="dropdown ">
                                       <div class="dropdown-trigger">
                                         <button class="button" aria-haspopup="true" aria-controls="dropdown-menu">
                                           <span>{{ Auth::user()->name }}</span> <span class="caret"></span>
@@ -72,9 +73,9 @@
                                                         {{ csrf_field() }}
                                                     </form>
                                           <a class="dropdown-item">
-                                            Other dropdown item
+                                            My ratings
                                           </a>
-                                          <a href="#" class="dropdown-item is-active">
+                                         {{-- <a href="#" class="dropdown-item is-active">
                                             Active dropdown item
                                           </a>
                                           <a href="#" class="dropdown-item">
@@ -83,7 +84,7 @@
                                           <hr class="dropdown-divider">
                                           <a href="#" class="dropdown-item">
                                             With a divider
-                                          </a>
+                                          </a>--}}
                                         </div>
                                       </div>
                                     </div>
