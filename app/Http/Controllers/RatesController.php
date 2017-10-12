@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Rate;
+use App\Tag;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -41,20 +42,18 @@ class RatesController extends Controller
      */
     public function store(Request $request)
     {
-        if(count($request['rates']) > 0){
-            foreach($request['rates'] as $single_rate){
+        $tags = Tag::all();
+        foreach($tags as $tag){
+            if(isset($request['rating_'.$tag->id])){
                 $rate = new Rate;
-                $rate->rate = $single_rate->rate;
+                $rate->rate = $request['rating_'.$tag->id];
                 $rate->user_id = Auth::user()->id;
-                $rate->rest_id = $single_rate->rest_id;
-                $rate->tag_id= $single_rate->tag_id;
+                $rate->rest_id = $request->rest_id;
+                $rate->tag_id= $tag->id;
                 $rate->save();
             }
-        }else{
-            return redirect()->route('restaurant.index')->with('error', 'Veuillez entrer au moins un avis !');
         }
-        return redirect()->route('restaurant.index')->with('success', 'Votre commentaire à bien été pris en compte !');
-
+        return redirect()->route('index')->with('success', 'Votre commentaire à bien été pris en compte !');
     }
 
     /**

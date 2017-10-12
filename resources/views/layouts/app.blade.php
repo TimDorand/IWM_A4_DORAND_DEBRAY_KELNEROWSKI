@@ -12,6 +12,7 @@
 
     <!-- Styles -->
     {{--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.6.0/css/bulma.css"/>--}}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.5.3/css/bulma.min.css" integrity="sha256-spCEAaZMKebC3rE/ZTt8jITn65b0Zan45WXblWjyDyQ=" crossorigin="anonymous" />
 
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
@@ -96,10 +97,10 @@
     </div>
 
 
-
+    <img src="{{asset('giphy-downsized.gif')}}" alt="loader" id="loader" >
     @yield('content')
 
-    <div class="hero-foot">
+  {{--  <div class="hero-foot">
         <div class="container">
             <div class="tabs is-centered">
                 <ul>
@@ -107,7 +108,7 @@
                 </ul>
             </div>
         </div>
-    </div>
+    </div>--}}
 {{--<script async type="text/javascript" src="../js/bulma.js"></script>--}}
 
     <!-- Scripts -->

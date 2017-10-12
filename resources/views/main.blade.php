@@ -37,116 +37,7 @@
 
             <div class="restaurantList columns is-multiline">
             </div>
-            {{--<div class="column is-6">--}}
 
-                {{--<form action="{{route('rates.store')}}" method="post">--}}
-                    {{--@foreach($tags as $tag)--}}
-                    {{--<div class="comment">--}}
-                        {{--<div class="comment-header-right">--}}
-                            {{--<fieldset class="rating">--}}
-                                {{--<input type="radio" id="star5" name="rating" value="5"/><label--}}
-                                        {{--class="full" for="star5"--}}
-                                        {{--title="Awesome - 5 stars"></label>--}}
-                                {{--<input type="radio" id="star4half" name="rating"--}}
-                                        {{--value="4.5"/><label class="half" for="star4half"--}}
-                                        {{--title="Pretty good - 4.5 stars"></label>--}}
-                                {{--<input type="radio" id="star4" name="rating" value="4"/><label--}}
-                                        {{--class="full" for="star4"--}}
-                                        {{--title="Pretty good - 4 stars"></label>--}}
-                                {{--<input type="radio" id="star3half" name="rating"--}}
-                                        {{--value="3.5"/><label class="half" for="star3half"--}}
-                                        {{--title="Meh - 3.5 stars"></label>--}}
-                                {{--<input type="radio" id="star3" name="rating" value="3"/><label--}}
-                                        {{--class="full" for="star3"--}}
-                                        {{--title="Meh - 3 stars"></label>--}}
-                                {{--<input type="radio" id="star2half" name="rating"--}}
-                                        {{--value="2.5"/><label class="half" for="star2half"--}}
-                                        {{--title="Kinda bad - 2.5 stars"></label>--}}
-                                {{--<input type="radio" id="star2" name="rating" value="2"/><label--}}
-                                        {{--class="full" for="star2"--}}
-                                        {{--title="Kinda bad - 2 stars"></label>--}}
-                                {{--<input type="radio" id="star1half" name="rating"--}}
-                                        {{--value="1.5"/><label class="half" for="star1half"--}}
-                                        {{--title="Meh - 1.5 stars"></label>--}}
-                                {{--<input type="radio" id="star1" name="rating" value="1"/><label--}}
-                                        {{--class="full" for="star1"--}}
-                                        {{--title="Sucks big time - 1 star"></label>--}}
-                                {{--<input type="radio" id="starhalf" name="rating"--}}
-                                        {{--value="half"/><label class="half" for="starhalf"--}}
-                                        {{--title="Sucks big time - 0.5 stars"></label>--}}
-                            {{--</fieldset>--}}
-                            {{--<div class="comment-header-right-imdb"><span class="logo">IMDB</span><span class="point">8.1/10</span></div>--}}
-                        {{--</div>--}}
-                        {{--<div class="comment-body height-0">--}}
-                            {{--<textarea name="comment" class="comment-body-text" required="required" style="width:100%;border:none;box-shadow:none;" minlength="10" contenteditable="true"></textarea>--}}
-                        {{--</div>--}}
-                        {{--<script>--}}
-                            {{--$(function () {--}}
-
-                                {{--var comment = $('.comment'),--}}
-                                    {{--commentText = $('.comment-body-text'),--}}
-                                    {{--commentTitle = $('.rating'),--}}
-                                    {{--userName = $('.comment-header-left-title--user'),--}}
-                                    {{--commentBody = $('.comment-body'),--}}
-                                    {{--commentFooter = $('.comment-footer'),--}}
-                                    {{--imdb = $('.comment-header-right-imdb'),--}}
-                                    {{--send = $('.buton--main'),--}}
-                                    {{--bold = $('.text-change--bold');--}}
-
-                                {{--$(commentTitle).on('click', function () {--}}
-{{--//                                                $(commentTitle).addClass('displayNone');--}}
-{{--//                                                $(userName).removeClass('displayNone');--}}
-                                    {{--$(commentBody)--}}
-                                        {{--.removeClass('height-0')--}}
-                                        {{--.addClass('height-10')--}}
-                                        {{--.addClass('m-t-16');--}}
-                                    {{--$(commentText).text('');--}}
-                                    {{--$(commentText).focus();--}}
-                                    {{--$(imdb)--}}
-                                        {{--.removeClass('displayNone')--}}
-                                        {{--.removeClass('scale-0')--}}
-                                        {{--.css('transform', 'scale(1)');--}}
-                                    {{--$(commentFooter)--}}
-                                        {{--.removeClass('height-0')--}}
-                                        {{--.addClass('height-3')--}}
-                                        {{--.addClass('m-t-16');--}}
-                                {{--});--}}
-
-                                {{--/*  $(send).on('click', function () {--}}
-                                 {{--var commentValue = $(commentText).text();--}}
-                                 {{--$(comment).after('<div class="public">Merci pour votre commentaire !</div>')--}}
-                                 {{--setTimeout(function () {--}}
-                                 {{--$('.public').css('transform', 'scale(1)');--}}
-                                 {{--}, 50);--}}
-                                 {{--// back action--}}
-                                 {{--$(commentTitle).removeClass('displayNone');--}}
-                                 {{--$(userName).addClass('displayNone');--}}
-                                 {{--$(commentBody)--}}
-                                 {{--.addClass('height-0')--}}
-                                 {{--.removeClass('height-10')--}}
-                                 {{--.removeClass('m-t-16');--}}
-                                 {{--$(imdb)--}}
-                                 {{--.addClass('displayNone')--}}
-                                 {{--.css('transform', 'scale(0)');--}}
-                                 {{--$(commentFooter)--}}
-                                 {{--.addClass('height-0')--}}
-                                 {{--.removeClass('height-3')--}}
-                                 {{--.removeClass('m-t-16');--}}
-                                 {{--});*/--}}
-
-                                {{--$('#makeBold').on('click', function () {--}}
-                                    {{--text = window.getSelection;--}}
-                                    {{--alert(text);--}}
-                                {{--});--}}
-
-                            {{--});--}}
-                        {{--</script>--}}
-                    {{--</div>--}}
-                    {{--@endforeach--}}
-                    {{--<div class="comment-footer-right">--}}
-                        {{--<input type="submit" title="Valider" class="button buton--main"></div>--}}
-                {{--</form>--}}
-            {{--</div>--}}
         </div>
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
@@ -165,7 +56,7 @@
             infowindow = new google.maps.InfoWindow();
         }
 
-        function callback(results, status) {
+        function createMarkers(results, status) {
             if (status === google.maps.places.PlacesServiceStatus.OK) {
                 for (var i = 0; i < results.length; i++) {
                     createMarker(results[i]);
@@ -200,7 +91,62 @@
             alert(message);
         }
 
-        var googleResponse
+        function displayList(data){
+            var listRest = []
+            var photoRef
+            for (var key in data) {
+                if (data[key].photo_reference) {
+                    photoRef = data[key].photo_reference
+                } else {
+                    photoRef = 'CmRaAAAApfIhUaSptnWNIsypAN1eC80OE6TPd-Aytf7-EssAY7P2Egx6w59cvPfLrO7RSFy-gvLGR4OYCYeaPt4AkJu6MWFzFZbbgiXQZ6legyk4zX1LxuEa-ILdeAf7tpeh7ZW1EhAH2UdmVxJFYrAo0oP6yYSKGhQgP6MZx2EQ4CUzTyvYsKs6Kc_sEQ'
+                }
+                listRest[key] = '<div class="column is-6">' +
+                    '<div class="box">' +
+                    '<article class="media columns">' +
+                    '<div class="media-left column is-2 is-one-quarter-mobile"> ' +
+//                            '<figure class="image height-auto"><img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=' + photoRef + '&key=AIzaSyAg4AuvoQ6ZF5uxqpjliVxYACAdAWvbvDk" alt="Image"></figure> ' +
+                    '<figure class="image height-auto"><img src="' + data[key].icon + '" alt="Image"></figure> ' +
+                    '</div> ' +
+                    '<div class="media-content column is-10"> ' +
+                    '<div class="content"> <p  style="margin:0px"> <strong>' + data[key].name + '</strong>  <br> ' + data[key].infos + '</p>' +
+                    '<br><form action="{{route('rates.store')}}" method="post" class="columns is-multiline">' +
+                    '{{csrf_field()}}'+
+                        @foreach($tags as $tag)
+                                @if($tag->category == 'main')
+                            '<div class="comment column is-6" id="comment_' + data[key].g_id + '_{{$tag->id}}"> ' +
+                    '<div class="comment-header-right"> ' +
+                    '<fieldset class="rating"> ' +
+                    '<input type="radio" id="' + data[key].g_id + '{{$tag->id}}_star5" name="rating_{{$tag->id}}" value="5"/><label class="full" for="' + data[key].g_id + '{{$tag->id}}_star5" title="Awesome - 5 stars"></label> ' +
+                    '<input type="radio" id="' + data[key].g_id + '{{$tag->id}}_star4half" name="rating_{{$tag->id}}" value="4.5"/><label class="half" for="' + data[key].g_id + '{{$tag->id}}_star4half" title="Pretty good - 4.5 stars"></label> ' +
+                    '<input type="radio" id="' + data[key].g_id + '{{$tag->id}}_star4" name="rating_{{$tag->id}}" value="4"/><label class="full" for="' + data[key].g_id + '{{$tag->id}}_star4" title="Pretty good - 4 stars"></label> ' +
+                    '<input type="radio" id="' + data[key].g_id + '{{$tag->id}}_star3half" name="rating_{{$tag->id}}"value="3.5"/><label class="half" for="' + data[key].g_id + '{{$tag->id}}_star3half" title="Meh - 3.5 stars"></label> ' +
+                    '<input type="radio" id="' + data[key].g_id + '{{$tag->id}}_star3" name="rating_{{$tag->id}}" value="3"/><label class="full" for="' + data[key].g_id + '{{$tag->id}}_star3" title="Meh - 3 stars"></label> ' +
+                    '<input type="radio" id="' + data[key].g_id + '{{$tag->id}}_star2half" name="rating_{{$tag->id}}" value="2.5"/><label class="half" for="' + data[key].g_id + '{{$tag->id}}_star2half" title="Kinda bad - 2.5 stars"></label> ' +
+                    '<input type="radio" id="' + data[key].g_id + '{{$tag->id}}_star2" name="rating_{{$tag->id}}" value="2"/><label class="full" for="' + data[key].g_id + '{{$tag->id}}_star2" title="Kinda bad - 2 stars"></label> ' +
+                    '<input type="radio" id="' + data[key].g_id + '{{$tag->id}}_star1half" name="rating_{{$tag->id}}" value="1.5"/><label class="half" for="' + data[key].g_id + '{{$tag->id}}_star1half" title="Meh - 1.5 stars"></label> ' +
+                    '<input type="radio" id="' + data[key].g_id + '{{$tag->id}}_star1" name="rating_{{$tag->id}}" value="1"/><label class="full" for="' + data[key].g_id + '{{$tag->id}}_star1" title="Sucks big time - 1 star"></label> ' +
+                    '<input type="radio" id="' + data[key].g_id + '{{$tag->id}}_starhalf" name="rating_{{$tag->id}}" value="half"/><label class="half" for="' + data[key].g_id + '{{$tag->id}}_starhalf" title="Sucks big time - 0.5 stars"></label> ' +
+                    '</fieldset> ' +
+                    '<input hidden name="rest_id" value="' + data[key].id + '"><p style="padding-top:8px">{{$tag->name}}</p></div></div>' +
+                        @endif
+                                @endforeach
+                            '<div class="comment-footer-right"> ' +
+                    '<div class="level"><button type="submit" title="Valider" class="button level-right is-small">Valider</button></div> ' +
+                    '</form> ' +
+                    '</div>' +
+                    '</div> ' +
+                    '</article> ' +
+                    '</div><' +
+                    '/div>'
+
+            }
+
+
+            for (rest in listRest) {
+                $(".restaurantList").append(listRest[rest]);
+            }
+        }
+
         function savePosition(position) {
             initMap(position.coords.latitude, position.coords.longitude);
             $.ajax({
@@ -210,37 +156,24 @@
                 url: "/",
                 data: {lat: position.coords.latitude, lng: position.coords.longitude, _token: "{{csrf_token()}}"},
                 success: function (data) {
-                    callback(data, 'OK');
+                    createMarkers(data, 'OK');
+                    displayList(data);
                     console.log(data);
-
-                    var listRest = []
-                    var photoRef
-                    for (var key in data) {
-                        if (data[key].photo_reference) {
-                            photoRef = data[key].photo_reference
-                        } else {
-                            photoRef = 'CmRaAAAApfIhUaSptnWNIsypAN1eC80OE6TPd-Aytf7-EssAY7P2Egx6w59cvPfLrO7RSFy-gvLGR4OYCYeaPt4AkJu6MWFzFZbbgiXQZ6legyk4zX1LxuEa-ILdeAf7tpeh7ZW1EhAH2UdmVxJFYrAo0oP6yYSKGhQgP6MZx2EQ4CUzTyvYsKs6Kc_sEQ'
-                        }
-                        listRest[key] = '<div class="column is-6">' +
-                            '<div class="box">' +
-                            '<article class="media columns">' +
-                            '<div class="media-left column is-2"> ' +
-                            '<figure class="image height-auto"><img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=' + photoRef + '&key=AIzaSyAg4AuvoQ6ZF5uxqpjliVxYACAdAWvbvDk" alt="Image"></figure> ' +
-                            '</div> ' +
-                            '<div class="media-content column is-10"> ' +
-                            '<div class="content"> <p> <strong>' + data[key].name + '</strong>  <br> ' + data[key].infos + '</p>' +
-                            '</div>' +
-                            '</div> ' +
-                            '</article> ' +
-                            '</div><' +
-                            '/div>'
-                    }
-                    for (rest in listRest) {
-                        $(".restaurantList").append(listRest[rest]);
-                    }
+                    $('#loader').hide();
                 }
             });
         }
+
+        var listeRestaurants;
+
+        $('.tag').click(function(){
+            $(this).toggleClass('animated pulse is-success');
+            // var liste obtenue
+            var text_tag =  $(this).text();
+            // if($.inArray(text_tag, liste obtenue) > -1);
+            // append listRestaurants
+            //createMarker(listeRestaurants);
+        });
     </script>
 
     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAg4AuvoQ6ZF5uxqpjliVxYACAdAWvbvDk&libraries=places&callback=getLocation" async defer></script>
