@@ -199,7 +199,6 @@
         });
 
         function sendTags(listTags,listeRestaurants){
-            alert(listTags);
             for(i=0;i<listeTags.length;i++)
             {
                 if($.inArray(listTags[i], listeRestaurants) == -1)
