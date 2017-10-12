@@ -21,6 +21,7 @@ class CreateRestaurantsTable extends Migration
             $table->string('name');
             $table->longText('icon')->nullable();
             $table->longText('infos')->nulable();
+            $table->longText('types')->nulable();
             $table->timestamps();
         });
     }
