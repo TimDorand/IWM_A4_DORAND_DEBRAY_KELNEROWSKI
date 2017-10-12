@@ -19,12 +19,11 @@ class RestaurantController extends Controller
     public function maps()
     {
         try {
-            $restaurantsGoogle = Curl::to("https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=" . $_POST['lat'] . "," . $_POST['lng'] . "&radius=750&type=restaurant&key=AIzaSyAg4AuvoQ6ZF5uxqpjliVxYACAdAWvbvDk")
+                $restaurantsGoogle = Curl::to("https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=" . $_POST['lat'] . "," . $_POST['lng'] . "&radius=750&type=restaurant&key=AIzaSyAt_mclmdnLk7Fvzza-SW72yFbNvv7wxC4")
                 ->get();
         }
         catch (Exception $err){
             // Logs Google API failure
-            return $err;
         }
 
         $restaurantsSQL = Restaurant::all();
