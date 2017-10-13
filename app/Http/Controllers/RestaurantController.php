@@ -25,6 +25,7 @@ class RestaurantController extends Controller
         }
         catch (Exception $err){
             // Logs Google API failure
+
         }
 
         $restaurantsSQL = DB::table("restaurants")
