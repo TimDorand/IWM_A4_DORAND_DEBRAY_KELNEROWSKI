@@ -5,16 +5,12 @@
         width: 100%;
     }
 </style>--}}
-{{--
-<script>jQuery(window).load(function () {
-        $('.alertcustom').delay(10000).fadeOut("2000");
-    });
-</script>--}}
+
 
 <br>
 @foreach (['danger', 'warning', 'success', 'info'] as $msg)
     @if(Session::has('alert-' . $msg))
-        <div class="notification is-{{$msg}}">
+        <div id='notification' class="notification is-{{$msg}}">
             {!!  Session::get('alert-' . $msg)  !!}
         </div>
     @endif

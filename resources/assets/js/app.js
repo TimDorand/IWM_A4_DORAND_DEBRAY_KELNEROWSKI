@@ -1,6 +1,10 @@
 'use strict'
 window.Vue = require('vue');
+
 Vue.component('restaurants', require('./components/Restaurants.vue'))
+Vue.component('maps', require('./components/Maps.vue'))
+
+window.eventHub = new Vue({})
 
 const app = new Vue({
     el: '#app',

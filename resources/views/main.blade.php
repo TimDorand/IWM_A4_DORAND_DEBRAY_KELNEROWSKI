@@ -2,55 +2,28 @@
 
 @section('content')
 
-    <section class="hero has-text-centered is-medium is-success is-bold">
+    {{--<section class="hero has-text-centered is-medium is-success is-bold">--}}
         {{--<div class="hero-body">--}}
         {{--   <div class="hero-body" style=" z-index:0;">
                <div class="container">
                    <h1 class="title">Easily find where to eat !</h1>
                </div>
            </div>--}}
-        <div id="map" style="height:300px"></div>
+        {{--<div id="map" style="height:300px"></div>--}}
         {{--</div>--}}
-    </section>
-
+    {{--</section>--}}
+    <div>
+        @include('layouts.message')
+        <section class="hero has-text-centered is-medium is-success is-bold">
+            <maps id="map" style="height:300px"></maps>
+        </section>
+        <br>
     <restaurants :tags-list="{{json_encode($tags)}}"></restaurants>
 
-
-    <div class="container">
-        @include('layouts.message')
-        <br>
-        <div id="meta" class="field is-grouped is-grouped-multiline">
-            @foreach($tags as $tag)
-                @if($tag->category == 'main')
-
-                    <div class="control">
-                        <div class="tags has-addons">
-                            <span class="tag" tag="{{$tag->id}}">{{$tag->name}}</span>
-                        </div>
-                    </div>
-                @endif
-            @endforeach
-        </div>
-        <div id="meta" class="field is-grouped is-grouped-multiline">
-            @foreach($tags as $tag)
-                @if($tag->category == 'second')
-
-                    <div class="control">
-                        <div class="tags has-addons">
-                            <span class="tag" tag="{{$tag->id}}">{{$tag->name}}</span>
-                        </div>
-                    </div>
-                @endif
-            @endforeach
-        </div>
-
-        <div class="restaurantList columns is-multiline">
-        </div>
-
     </div>
-    </div>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    {{--<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>--}}
 
+{{--
     <script>
         var map;
         var infowindow;
@@ -255,8 +228,8 @@
 */
     </script>
 
-    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAg4AuvoQ6ZF5uxqpjliVxYACAdAWvbvDk&libraries=places&callback=getLocation" async defer></script>
 
+--}}
 
 
 @endsection

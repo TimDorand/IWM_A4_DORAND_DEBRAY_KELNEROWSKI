@@ -120,6 +120,8 @@
         'csrfToken' : '{{csrf_token()}}'
     };
 </script>
+
 <script src="{{ asset('js/app.js') }}"></script>
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAg4AuvoQ6ZF5uxqpjliVxYACAdAWvbvDk&libraries=places" async defer></script>
 </body>
 </html>

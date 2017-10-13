@@ -1,50 +1,59 @@
 <template>
-    <div class="google-map" :id="mapName"></div>
+    <div class="google-map" :id="map"></div>
 </template>
 
 <script>
-    const axios = require('axios');
-
     export default {
-        data: function(){
-            return{
-                loader : true,
-                restaurants: {},
+        name: 'maps',
+        props: ['restaurants'],
+        data: function () {
+            return {
+                markerCoordinates: [],
+                map: null,
+                infowindow: null,
+                bounds: null,
+                markers: [],
             }
         },
-        props:['tagsList'],
-        mounted() {
-            this.getLocation()
-        },
-        created(){
-            console.log(this.tagsList); // output is "undefined"
-
+        mounted: function () {
+            this.getPosition()
+            eventHub.$on('restReady', this.createMarkers)
         },
         methods: {
-            getLocation() {
+            createMarkers(places) {
+                for (let i = 0; i < places.length; i++) {
+                    let marker = new google.maps.Marker({
+                        map: this.map,
+                        position: {lat: parseFloat(places[i].lat), lng: parseFloat(places[i].lng)}
+                    })
+                    this.markers.push(marker)
+                    google.maps.event.addListener(marker, 'click', function () {
+                        this.infowindow.setContent(places[i].name);
+                        this.infowindow.open(thismap, this);
+                    })
+                }
+            },
+            initMap(position) {
+                console.log('Position acquiered')
+                let pyrmont = {lat: position.coords.latitude, lng: position.coords.longitude};
+                this.map = new google.maps.Map(document.getElementById('map'), {
+                    center: pyrmont,
+                    zoom: 15
+                })
+                this.infowindow = new google.maps.InfoWindow()
+            },
+            getPosition(){
                 if (navigator.geolocation) {
-                    navigator.geolocation.getCurrentPosition(this.getRestaurants, this.errorHandler, {timeout: 10000});
+                    navigator.geolocation.getCurrentPosition(this.initMap, this.positionError, {timeout: 10000});
                 } else {
                     //Geolocation is not supported by this browser
                 }
             },
-            errorHandler(err) { console.log(err.message) },
-            getRestaurants(position) {
-                let params = new URLSearchParams();
-                params.append('lat', position.coords.latitude);
-                params.append('lng', position.coords.longitude);
-                axios.post('/', params)
-                    .then(response => {
-                        this.restaurants = response.data
-                        this.loader = false
-                    })
-                    .catch(error => {
-                        console.log(error.message)
-                        this.loader = false
-                    })
-            },
-            displayList(){
+            positionError(error) {
+                var errorCode = error.code;
+                var message = error.message;
 
+                alert(message);
             }
         }
 
