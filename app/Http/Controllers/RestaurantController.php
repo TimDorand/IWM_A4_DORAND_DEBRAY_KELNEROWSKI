@@ -27,19 +27,6 @@ class RestaurantController extends Controller
             // Logs Google API failure
         }
 
-        /*   $restaurantsSQL = DB::select(
-               'SELECT * FROM
-                       (SELECT *, (3959 * acos(cos(radians(' . $_POST['lat'] . ')) * cos(radians(lat)) *
-                       cos(radians(lng) - radians(' . $_POST['lng'] . ')) +
-                       sin(radians(' . $_POST['lat'] . ')) * sin(radians(lat))))
-                       AS distance
-                       FROM restaurants
-                       INNER JOIN rates ON restaurants.id=rates.restaurant_id
-                       ) AS distances
-                   WHERE distance < 1
-                   ORDER BY distance
-           ');
-   **/
         $restaurantsSQL = DB::table("restaurants")
             ->select("*"
                 ,DB::raw("6371 * acos(cos(radians(" . $_POST['lat'] . ")) 
