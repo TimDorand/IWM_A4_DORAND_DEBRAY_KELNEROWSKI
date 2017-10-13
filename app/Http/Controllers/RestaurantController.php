@@ -6,6 +6,7 @@ use App\Rate;
 use App\Restaurant;
 use App\Tag;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Ixudra\Curl\Facades\Curl;
 use Mockery\CountValidator\Exception;
 
@@ -18,36 +19,56 @@ class RestaurantController extends Controller
      */
     public function maps()
     {
-       try {
-                $restaurantsGoogle = Curl::to("https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=" . $_POST['lat'] . "," . $_POST['lng'] . "&radius=750&type=food&key=AIzaSyAt_mclmdnLk7Fvzza-SW72yFbNvv7wxC4")
+        try {
+            $restaurantsGoogle = Curl::to("https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=" . $_POST['lat'] . "," . $_POST['lng'] . "&radius=750&type=food&key=AIzaSyAt_mclmdnLk7Fvzza-SW72yFbNvv7wxC4")
                 ->get();
         }
         catch (Exception $err){
             // Logs Google API failure
         }
 
-        $restaurantsSQL = Restaurant::all();
+        /*   $restaurantsSQL = DB::select(
+               'SELECT * FROM
+                       (SELECT *, (3959 * acos(cos(radians(' . $_POST['lat'] . ')) * cos(radians(lat)) *
+                       cos(radians(lng) - radians(' . $_POST['lng'] . ')) +
+                       sin(radians(' . $_POST['lat'] . ')) * sin(radians(lat))))
+                       AS distance
+                       FROM restaurants
+                       INNER JOIN rates ON restaurants.id=rates.restaurant_id
+                       ) AS distances
+                   WHERE distance < 1
+                   ORDER BY distance
+           ');
+   **/
+        $restaurantsSQL = DB::table("restaurants")
+            ->select("*"
+                ,DB::raw("6371 * acos(cos(radians(" . $_POST['lat'] . ")) 
+		* cos(radians(restaurants.lat)) 
+		* cos(radians(restaurants.lng) - radians(" . $_POST['lng'] . ")) 
+		+ sin(radians(" .$_POST['lat']. ")) 
+		* sin(radians(restaurants.lat))) AS distance"))
+            ->having('distance', '<', 0.75)
+            ->get();
 
         $restaurantsSQLOrdered = array();
         $results = array();
 
         foreach ($restaurantsSQL as $restaurant){
             $restaurantsSQLOrdered[$restaurant->g_id] = $restaurant;
-            if($this->distance($_POST['lat'],$_POST['lng'],$restaurant->lat, $restaurant->lng) < 0.75) {
-                $rates = $restaurant->rates;
-                $count = new \stdClass();
-                $restaurant->rate = new \stdClass();
-                foreach ($rates as $rate) {
-                    if(!isset($restaurant->rate->{$rate->tag_id})) $restaurant->rate->{$rate->tag_id} = 0;
-                    if(!isset($count->{$rate->tag_id})) $count->{$rate->tag_id} = 0;
+            $count = new \stdClass();
+            $restaurant->rate = new \stdClass();
+            $rates =  DB::table('rates')->where('restaurant_id', '=', $restaurant->id)->get();
 
-                    $restaurant->rate->{$rate->tag_id} = round(($restaurant->rate->{$rate->tag_id}* $count->{$rate->tag_id} + $rate->rate) / ($count->{$rate->tag_id} + 1) * 2) / 2;
-                    $count->{$rate->tag_id}++;
-                }
-                array_push($results, $restaurant);
+            foreach ($rates as $rate) {
+                if(!isset($restaurant->rate->{$rate->tag_id})) $restaurant->rate->{$rate->tag_id} = 0;
+                if(!isset($count->{$rate->tag_id})) $count->{$rate->tag_id} = 0;
+
+                $restaurant->rate->{$rate->tag_id} = round(($restaurant->rate->{$rate->tag_id}* $count->{$rate->tag_id} + $rate->rate) / ($count->{$rate->tag_id} + 1) * 2) / 2;
+                $count->{$rate->tag_id}++;
             }
-
+            array_push($results, $restaurant);
         }
+
 
         if(isset($restaurantsGoogle)){
             $restaurantsGoogle = json_decode($restaurantsGoogle)->results;
