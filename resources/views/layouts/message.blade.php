@@ -7,7 +7,7 @@
 </style>--}}
 
 
-<br>
+
 @foreach (['danger', 'warning', 'success', 'info'] as $msg)
     @if(Session::has('alert-' . $msg))
         <div id='notification' class="notification is-{{$msg}}">

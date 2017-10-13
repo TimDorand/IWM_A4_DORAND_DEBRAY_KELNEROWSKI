@@ -20,6 +20,25 @@
             eventHub.$on('restReady', this.createMarkers)
         },
         methods: {
+            getPosition() {
+                let position = localStorage.getItem('position');
+                if (position) {
+                    console.log('Stored position', position)
+                    this.getRestaurants(JSON.parse(position))
+                } else {
+                    navigator.geolocation.getCurrentPosition(this.initMap, this.errorHandler, {timeout: 10000});
+                }
+              /*  setInterval(function () {
+                    if (navigator.geolocation) {
+                        navigator.geolocation.getCurrentPosition(this.savePosition, this.errorHandler, {timeout: 10000});
+                    } else {
+                        //Geolocation is not supported by this browser
+                    }
+                }, 10000)*/
+            },
+            savePosition(position){
+                localStorage.setItem('position', JSON.stringify(position));
+            },
             createMarkers(places) {
                 for (let i = 0; i < places.length; i++) {
                     let marker = new google.maps.Marker({
@@ -42,18 +61,10 @@
                 })
                 this.infowindow = new google.maps.InfoWindow()
             },
-            getPosition(){
-                if (navigator.geolocation) {
-                    navigator.geolocation.getCurrentPosition(this.initMap, this.positionError, {timeout: 10000});
-                } else {
-                    //Geolocation is not supported by this browser
-                }
-            },
             positionError(error) {
                 var errorCode = error.code;
                 var message = error.message;
-
-                alert(message);
+                console.log(message);
             }
         }
 

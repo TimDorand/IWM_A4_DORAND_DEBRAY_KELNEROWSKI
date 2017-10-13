@@ -20,7 +20,6 @@
 </head>
 <body>
 <div id="app">
-    <div class="container">
         <nav class="nav has-shadow">
             <div class="container">
                 <div class="nav-left">
@@ -97,7 +96,6 @@
                 </div>
             </div>
         </nav>
-    </div>
 
 
     @yield('content')
