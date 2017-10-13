@@ -18,7 +18,7 @@ class RestaurantController extends Controller
      */
     public function maps()
     {
-        try {
+       try {
                 $restaurantsGoogle = Curl::to("https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=" . $_POST['lat'] . "," . $_POST['lng'] . "&radius=750&type=food&key=AIzaSyAt_mclmdnLk7Fvzza-SW72yFbNvv7wxC4")
                 ->get();
         }
@@ -41,7 +41,7 @@ class RestaurantController extends Controller
                     if(!isset($restaurant->rate->{$rate->tag_id})) $restaurant->rate->{$rate->tag_id} = 0;
                     if(!isset($count->{$rate->tag_id})) $count->{$rate->tag_id} = 0;
 
-                    $restaurant->rate->{$rate->tag_id} = ($restaurant->rate->{$rate->tag_id}* $count->{$rate->tag_id} + $rate->rate) / ($count->{$rate->tag_id} + 1);
+                    $restaurant->rate->{$rate->tag_id} = round(($restaurant->rate->{$rate->tag_id}* $count->{$rate->tag_id} + $rate->rate) / ($count->{$rate->tag_id} + 1) * 2) / 2;
                     $count->{$rate->tag_id}++;
                 }
                 array_push($results, $restaurant);
