@@ -3,8 +3,8 @@
         <div class="container">
             <br>
             <div id="meta" class="field is-grouped is-grouped-multiline">
-                <div class="control" v-for="(tag, tagkey) in tagsList" v-if="tag.category === 'main'">
-                    <div class="tags has-addons" @click="filterRestaurants(tag)">
+                <div class="control" v-for="(tag, tagkey) in tagsList" v-if="tag.category === 'main'" @click="addTag(tag.id)">
+                    <div class="tags has-addons">
                         <span class="tag">{{ tag.name }}</span>
                     </div>
                 </div>
@@ -22,7 +22,7 @@
         <br>
         <div class="columns is-multiline">
 
-            <div class="column is-6" v-for="(rest, restkey) in restaurants">
+            <div class="column is-6" v-for="(rest, restkey) in selectedRestaurants">
                 <div class="box">
                     <article class="media columns">
                         <div class="media-left column is-2 is-one-quarter-mobile">
@@ -102,6 +102,7 @@
             return {
                 loader: true,
                 restaurants: {},
+                selectedRests: {},
                 places: {},
                 csrf: "",
                 selectedTags: [],
@@ -114,6 +115,26 @@
                     'animated': this.isActive,
                     'pulse': this.isActive,
                     'is-success': this.isActive,
+                }
+            },
+            selectedRestaurants(){
+//                this.isActive = !this.isActive;
+                let result = []
+                console.log('Selected tags', this.selectedTags)
+                if (this.selectedTags.length !== 0) {
+                    for (let r = 0; r < this.restaurants.length; r++) {
+                        for (let t = 0; t < this.selectedTags.length; t++) {
+                            console.log(this.selectedTags[t], this.restaurants[r])
+                            if (this.selectedTags[t] in this.restaurants[r].rate) {
+                                result.push(this.restaurants[r])
+                            }
+                        }
+                    }
+                    console.log(result)
+                    return this.removeDuplicatesBy(x => x.name, result);
+
+                } else {
+                    return this.restaurants
                 }
             }
         },
@@ -131,9 +152,15 @@
 
         },
         methods: {
+            removeDuplicatesBy(keyFn, array) {
+                var mySet = new Set();
+                return array.filter(function (x) {
+                    var key = keyFn(x), isNew = !mySet.has(key);
+                    if (isNew) mySet.add(key);
+                    return isNew;
+                });
+            },
             getLocation() {
-                this.selectedTags = this.tagsList
-
                 let position = localStorage.getItem('position');
                 if (position) {
                     console.log('Stored position', position)
@@ -171,34 +198,29 @@
                         this.loader = false
                     })
             },
-            displayList(){
-
-            },
-            filterRestaurants(tag){
-                console.log(tag.id)
-//                this.isActive = !this.isActive;
-                if (tag in this.selectedTags) {
-                    this.selectedTags.splice(this.selectedTags.indexOf(tag, 1))
+            addTag(tag){
+                console.log(tag)
+                console.log(this.selectedTags[0])
+                if (tag == this.selectedTags[0]) {
+                    this.selectedTags = []
+                    return this.restaurants
                 } else {
-                    this.selectedTags.push(tag.id)
-                }
 
-                let notSelected = []
-                let filteredRestaurants = this.restaurants.filter(rest => {
-                    for (let key in this.selectedTags) {
-                        if (this.selectedTags[key] in rest.rate) {
-                            console.log('found in Rest ', rest.name)
-                            if (!notSelected[rest.id]) {
-                                return true
-                            }
-                        } else {
-                            notSelected[rest.id] = true;
+                    for (var i = 0; i < this.selectedTags.length; i++) {
+                        if (tag == this.selectedTags[i]) {
+                            this.selectedTags.splice(this.selectedTags.indexOf(tag), 1);
                         }
                     }
-                    console.log(filteredRestaurants)
-                    this.restaurants = filteredRestaurants;
-                });
+                    if (tag in this.selectedTags) {
+                        console.log(tag, 'is in selected tag')
+                        this.selectedTags.splice(this.selectedTags.indexOf(tag), 1)
+                    } else {
+                        this.selectedTags.push(tag)
+                    }
+                }
             }
+
+
         }
     }
 </script>
