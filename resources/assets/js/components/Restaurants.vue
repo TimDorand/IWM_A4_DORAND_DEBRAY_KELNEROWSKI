@@ -4,7 +4,7 @@
             <br>
             <div id="meta" class="field is-grouped is-grouped-multiline">
                 <div class="control" v-for="(tag, tagkey) in tagsList" v-if="tag.category === 'main'">
-                    <div class="tags has-addons">
+                    <div class="tags has-addons" @click="filterRestaurants(tag)">
                         <span class="tag">{{ tag.name }}</span>
                     </div>
                 </div>
@@ -72,7 +72,8 @@
                                                 <input type="radio" :id="tagkey+'_starhalf'" :name="'rating_'+tagkey" value="0.5"><label class="half" ((rest.rate && rest.rate.tagkey] >= 0.5) ? 'style="background: rgba(43, 232, 105, 0.2);"' : '') :for="tagkey+'_starhalf'" title="Sucks big time - 0.5 stars"></label>
     -->
                                             </fieldset>
-                                            <input hidden="" name="rest_id" :value="restkey+1">
+                                            <input hidden name="rest_id" :value="rest.id">
+                                            <!--{{rest.id}}-->
                                             <p style="padding-top:8px">
                                                 <span style="box-shadow: rgba(173, 173, 173, 0.37) 0px 3px 3px 0px;" class="has-text-weight-bold is-size-7 tag is-rounded">{{ rest.rate[tag.id] }}</span> {{ tag.name }}
                                             </p></div>
@@ -103,13 +104,24 @@
                 restaurants: {},
                 places: {},
                 csrf: "",
+                selectedTags: [],
+                isActive: false,
+            }
+        },
+        computed: {
+            animateClass: function () {
+                return {
+                    'animated': this.isActive,
+                    'pulse': this.isActive,
+                    'is-success': this.isActive,
+                }
             }
         },
         props: ['tagsList'],
         mounted() {
             this.getLocation()
             this.csrf = window.Laravel.csrfToken
-            setTimeout(function () {
+            setTimeout(() => {
                 if (document.getElementById('notification')) {
                     document.getElementById('notification').style.display = 'none';
                 }
@@ -120,6 +132,8 @@
         },
         methods: {
             getLocation() {
+                this.selectedTags = this.tagsList
+
                 let position = localStorage.getItem('position');
                 if (position) {
                     console.log('Stored position', position)
@@ -127,13 +141,13 @@
                 } else {
                     navigator.geolocation.getCurrentPosition(this.getRestaurants, this.errorHandler, {timeout: 10000});
                 }
-               /* setInterval(function () {
-                    if (navigator.geolocation) {
-                        navigator.geolocation.getCurrentPosition(this.savePosition, this.errorHandler, {timeout: 10000});
-                    } else {
-                        //Geolocation is not supported by this browser
-                    }
-                }, 10000)*/
+                /* setInterval(function () {
+                 if (navigator.geolocation) {
+                 navigator.geolocation.getCurrentPosition(this.savePosition, this.errorHandler, {timeout: 10000});
+                 } else {
+                 //Geolocation is not supported by this browser
+                 }
+                 }, 10000)*/
             },
             savePosition(position){
                 localStorage.setItem('position', JSON.stringify(position));
@@ -160,7 +174,31 @@
             displayList(){
 
             },
+            filterRestaurants(tag){
+                console.log(tag.id)
+//                this.isActive = !this.isActive;
+                if (tag in this.selectedTags) {
+                    this.selectedTags.splice(this.selectedTags.indexOf(tag, 1))
+                } else {
+                    this.selectedTags.push(tag.id)
+                }
 
+                let notSelected = []
+                let filteredRestaurants = this.restaurants.filter(rest => {
+                    for (let key in this.selectedTags) {
+                        if (this.selectedTags[key] in rest.rate) {
+                            console.log('found in Rest ', rest.name)
+                            if (!notSelected[rest.id]) {
+                                return true
+                            }
+                        } else {
+                            notSelected[rest.id] = true;
+                        }
+                    }
+                    console.log(filteredRestaurants)
+                    this.restaurants = filteredRestaurants;
+                });
+            }
         }
     }
 </script>
