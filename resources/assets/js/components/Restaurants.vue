@@ -125,13 +125,14 @@
                     for (let r = 0; r < this.restaurants.length; r++) {
                         for (let t = 0; t < this.selectedTags.length; t++) {
                             console.log(this.selectedTags[t], this.restaurants[r])
-                            if(this.selectedTags[t] in this.restaurants[r].rate){
+                            if (this.selectedTags[t] in this.restaurants[r].rate) {
                                 result.push(this.restaurants[r])
                             }
                         }
                     }
                     console.log(result)
-                    return result
+                    return this.removeDuplicatesBy(x => x.name, result);
+
                 } else {
                     return this.restaurants
                 }
@@ -151,6 +152,14 @@
 
         },
         methods: {
+            removeDuplicatesBy(keyFn, array) {
+                var mySet = new Set();
+                return array.filter(function (x) {
+                    var key = keyFn(x), isNew = !mySet.has(key);
+                    if (isNew) mySet.add(key);
+                    return isNew;
+                });
+            },
             getLocation() {
                 let position = localStorage.getItem('position');
                 if (position) {
